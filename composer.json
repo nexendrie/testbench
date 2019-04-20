@@ -1,5 +1,5 @@
 {
-  "name": "mrtnzlml/testbench",
+  "name": "nexendrie/testbench",
   "description": "Simple integration testing tool for Nette Framework applications",
   "type": "library",
   "license": [
@@ -60,5 +60,8 @@
     "kdyby/doctrine-dbal-batchimport": "Allows SQL scripts import for Doctrine (required with kdyby/doctrine)",
     "nette/database": "Allows enhanced database tests using Nette\\Database",
     "zenify/doctrine-migrations": "Migrate database to the fresh state"
+  },
+  "replace": {
+    "mrtnzlml/testbench": "*"
   }
 }
