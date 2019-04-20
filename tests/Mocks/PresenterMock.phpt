@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Tests\Mocks;
 
@@ -13,7 +14,7 @@ $latte->addProvider('uiControl', new \Testbench\Mocks\PresenterMock);
 
 /** @var \Testbench\Mocks\PresenterMock $mock */
 $mock = $latte->getProviders()['uiControl'];
-Assert::type('Testbench\Mocks\PresenterMock', new \Testbench\PresenterMock); //BC
+Assert::type(\Testbench\Mocks\PresenterMock::class, new \Testbench\PresenterMock); //BC
 
 Assert::false($mock->isAjax());
 
@@ -24,12 +25,12 @@ Assert::noError(function () use ($mock) {
 
 Assert::exception(function () use ($mock) {
 	$mock->afterRender();
-}, 'Nette\Application\AbortException');
+}, \Nette\Application\AbortException::class);
 
 $mock->loadState(['__terminate' => TRUE]);
 Assert::exception(function () use ($mock) {
 	$mock->startup();
-}, 'Nette\Application\AbortException');
+}, \Nette\Application\AbortException::class);
 
 Assert::match(
 	'<a href="plink|data!(0=10)"></a>',

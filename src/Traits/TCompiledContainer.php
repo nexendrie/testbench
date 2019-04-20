@@ -1,27 +1,27 @@
 <?php
+declare(strict_types = 1);
 
 namespace Testbench;
 
 trait TCompiledContainer
 {
 
-	/** @return \Nette\DI\Container */
-	protected function getContainer()
+	protected function getContainer(): \Nette\DI\Container
 	{
-		return \Testbench\ContainerFactory::create(FALSE);
+		return ContainerFactory::create(FALSE);
 	}
 
-	protected function getService($class)
+	protected function getService($class): ?object
 	{
 		return $this->getContainer()->getByType($class);
 	}
 
-	protected function refreshContainer($config = [])
+	protected function refreshContainer($config = []): \Nette\DI\Container
 	{
-		return \Testbench\ContainerFactory::create(TRUE, $config);
+		return ContainerFactory::create(TRUE, $config);
 	}
 
-	protected function changeRunLevel($testSpeed = \Testbench::FINE)
+	protected function changeRunLevel(int $testSpeed = \Testbench::FINE): void
 	{
 		if ((int)getenv('RUNLEVEL') < $testSpeed) {
 			\Tester\Environment::skip(
@@ -31,12 +31,12 @@ trait TCompiledContainer
 		}
 	}
 
-	protected function markTestAsSlow($really = TRUE)
+	protected function markTestAsSlow(bool $really = TRUE): void
 	{
 		$this->changeRunLevel($really ? \Testbench::FINE : \Testbench::QUICK);
 	}
 
-	protected function markTestAsVerySlow($really = TRUE)
+	protected function markTestAsVerySlow(bool $really = TRUE): void
 	{
 		$this->changeRunLevel($really ? \Testbench::SLOW : \Testbench::QUICK);
 	}

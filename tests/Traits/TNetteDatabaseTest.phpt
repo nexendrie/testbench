@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Tests\Traits;
 
@@ -19,7 +20,7 @@ class TNetteDatabaseTest extends \Tester\TestCase
 	public function testLazyConnection()
 	{
 		$container = $this->getContainer();
-		$db = $container->getByType('Nette\Database\Connection');
+		$db = $container->getByType(\Nette\Database\Connection::class);
 		$db->onConnect[] = function () {
 			Assert::fail('\Nette\Database\Connection::$onConnect event should not be called if you do NOT need database');
 		};
@@ -28,7 +29,7 @@ class TNetteDatabaseTest extends \Tester\TestCase
 
 	public function testContext()
 	{
-		Assert::type('Nette\Database\Context', $this->getContext());
+		Assert::type(\Nette\Database\Context::class, $this->getContext());
 	}
 
 	public function testDatabaseCreation()

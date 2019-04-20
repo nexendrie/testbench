@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Testbench;
 
@@ -9,13 +10,13 @@ class DatabasesRegistry
 
 	public function __construct()
 	{
-		$this->dataFile = 'nette.safe://' . \Testbench\Bootstrap::$tempDir . '/../databases.testbench';
+		$this->dataFile = 'nette.safe://' . Bootstrap::$tempDir . '/../databases.testbench';
 	}
 
 	/**
 	 * @return TRUE if registration successful or FALSE if database record already exists
 	 */
-	public function registerDatabase($databaseName)
+	public function registerDatabase(string $databaseName): bool
 	{
 		if (file_exists($this->dataFile)) {
 			$data = file_get_contents($this->dataFile);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use Tester\Assert;
 
@@ -10,7 +11,7 @@ class DoctrineComponentWithDatabaseAccess extends \Nette\Application\UI\Control
 		parent::__construct();
 
 		$connection = $entityManager->getConnection();
-		Assert::type('Testbench\Mocks\ConnectionMock', $connection); //not a service (listeners will not work)!
+		Assert::type(\Testbench\Mocks\ConnectionMock::class, $connection); //not a service (listeners will not work)!
 		Assert::false($connection->isConnected());
 		Assert::count(1, $connection->onConnect);
 		if ($connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySqlPlatform) {
@@ -21,7 +22,7 @@ class DoctrineComponentWithDatabaseAccess extends \Nette\Application\UI\Control
 		}
 	}
 
-	public function render()
+	public function render(): void
 	{
 		$this->template->render(__DIR__ . '/Component.latte');
 	}

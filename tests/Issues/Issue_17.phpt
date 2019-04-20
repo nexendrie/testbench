@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Tests\Issues;
 
@@ -23,7 +24,7 @@ class Issue_17 extends \Tester\TestCase
 		if ($shouldFail) {
 			Assert::exception(function () use ($params, $post) {
 				$this->check('Presenter:default', $params, $post);
-			}, 'Tester\AssertException', "field 'test' returned this error(s):\n  - This field is required.");
+			}, \Tester\AssertException::class, "field 'test' returned this error(s):\n  - This field is required.");
 		} else {
 			$this->check('Presenter:default', $params, $post);
 		}

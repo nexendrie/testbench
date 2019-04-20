@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Testbench;
 
@@ -14,7 +15,7 @@ class TestbenchExtension extends \Nette\DI\CompilerExtension
 		'url' => 'http://test.bench/',  // fake URL for HTTP request mock
 	];
 
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$builder = $this->compiler->getContainerBuilder();
 		$builder->parameters[$this->name] = $this->validateConfig($this->defaults);
@@ -24,7 +25,7 @@ class TestbenchExtension extends \Nette\DI\CompilerExtension
 		//TODO: $builder->addDefinition($this->prefix('applicationRequestMock'))->setClass('Testbench\ApplicationRequestMock');
 	}
 
-	public function beforeCompile()
+	public function beforeCompile(): void
 	{
 		$builder = $this->compiler->getContainerBuilder();
 
@@ -34,40 +35,40 @@ class TestbenchExtension extends \Nette\DI\CompilerExtension
 			$builder->removeDefinition($this->prefix('presenterMock'));
 			$builder->addDefinition($this->prefix('presenterMock'))->setClass($mockReplacement);
 		} else {
-			$builder->addDefinition($this->prefix('presenterMock'))->setClass('Testbench\Mocks\PresenterMock');
+			$builder->addDefinition($this->prefix('presenterMock'))->setClass(\Testbench\Mocks\PresenterMock::class);
 		}
 	}
 
 	/**
 	 * 'wrapperClass' is not a service!
 	 */
-	private function prepareDoctrine()
+	private function prepareDoctrine(): void
 	{
 		$doctrineConnectionSectionKeys = ['dbname' => NULL, 'driver' => NULL, 'connection' => NULL];
 		/** @var \Nette\DI\CompilerExtension $extension */
-		foreach ($this->compiler->getExtensions('Kdyby\Doctrine\DI\OrmExtension') as $extension) {
+		foreach ($this->compiler->getExtensions(\Kdyby\Doctrine\DI\OrmExtension::class) as $extension) {
 			if (array_intersect_key($extension->config, $doctrineConnectionSectionKeys)) {
-				$extension->config['wrapperClass'] = 'Testbench\Mocks\DoctrineConnectionMock';
+				$extension->config['wrapperClass'] = \Testbench\Mocks\DoctrineConnectionMock::class;
 			} else {
 				foreach ($extension->config as $sectionName => $sectionConfig) {
 					if (is_array($sectionConfig) && array_intersect_key($sectionConfig, $doctrineConnectionSectionKeys)) {
-						$extension->config[$sectionName]['wrapperClass'] = 'Testbench\Mocks\DoctrineConnectionMock';
+						$extension->config[$sectionName]['wrapperClass'] = \Testbench\Mocks\DoctrineConnectionMock::class;
 					}
 				}
 			}
 		}
 	}
 
-	private function prepareNetteDatabase(\Nette\DI\ContainerBuilder $builder)
+	private function prepareNetteDatabase(\Nette\DI\ContainerBuilder $builder): void
 	{
 		$ndbConnectionSectionKeys = ['dsn' => NULL, 'user' => NULL, 'password' => NULL];
 		/** @var \Nette\DI\CompilerExtension $extension */
-		foreach ($this->compiler->getExtensions('Nette\Bridges\DatabaseDI\DatabaseExtension') as $extension) {
+		foreach ($this->compiler->getExtensions(\Nette\Bridges\DatabaseDI\DatabaseExtension::class) as $extension) {
 			if (array_intersect_key($extension->config, $ndbConnectionSectionKeys)) {
 				$extensionConfig = $extension->config;
 				$definitionName = $extension->name . '.default.connection';
 				$builder->getDefinition($definitionName)
-					->setClass('Testbench\Mocks\NetteDatabaseConnectionMock', [
+					->setClass(\Testbench\Mocks\NetteDatabaseConnectionMock::class, [
 						$extensionConfig['dsn'],
 						$extensionConfig['user'],
 						$extensionConfig['password'],
@@ -77,7 +78,7 @@ class TestbenchExtension extends \Nette\DI\CompilerExtension
 				foreach ($extension->config as $sectionName => $sectionConfig) {
 					$definitionName = $extension->name . '.' . $sectionName . '.connection';
 					$builder->getDefinition($definitionName)
-						->setClass('Testbench\Mocks\NetteDatabaseConnectionMock', [
+						->setClass(\Testbench\Mocks\NetteDatabaseConnectionMock::class, [
 							$sectionConfig['dsn'],
 							$sectionConfig['user'],
 							$sectionConfig['password'],

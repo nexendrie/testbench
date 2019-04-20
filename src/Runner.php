@@ -1,11 +1,12 @@
 <?php
+declare(strict_types = 1);
 
 namespace Testbench;
 
 class Runner
 {
 
-	public function prepareArguments(array $args, $testsDir)
+	public function prepareArguments(array $args, string $testsDir): array
 	{
 		$args = new \Nette\Iterators\CachingIterator($args);
 		$parameters = [];
@@ -113,7 +114,7 @@ class Runner
 		return $args;
 	}
 
-	public function findVendorDirectory()
+	public function findVendorDirectory(): string
 	{
 		$recursionLimit = 10;
 		$findVendor = function ($dirName = 'vendor/bin', $dir = __DIR__) use (&$findVendor, &$recursionLimit) {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use Nette\Application\UI;
 
@@ -8,7 +9,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $persistentParameter;
 
-	public function actionJson()
+	public function actionJson(): void
 	{
 		$this->sendResponse(new \Nette\Application\Responses\JsonResponse([
 			'string' => [
@@ -17,28 +18,28 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		]));
 	}
 
-	public function renderDefault()
+	public function renderDefault(): void
 	{
 		$this->template->variable = 'test';
 	}
 
-	public function renderFail()
+	public function renderFail(): void
 	{
 		$this->error(NULL, \Nette\Http\IResponse::S500_INTERNAL_SERVER_ERROR);
 	}
 
-	public function renderException()
+	public function renderException(): void
 	{
 		throw new \Latte\CompileException;
 	}
 
-	public function renderRedirect()
+	public function renderRedirect(): void
 	{
 		$this->flashMessage('Because of _fid parameter to the URL...');
 		$this->redirect('default');
 	}
 
-	public function renderRedirectRss($flashMessage = TRUE)
+	public function renderRedirectRss($flashMessage = TRUE): void
 	{
 		if ($flashMessage) {
 			$this->flashMessage('Because of _fid parameter to the URL...');
@@ -46,7 +47,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		$this->redirect('rss');
 	}
 
-	public function renderRss()
+	public function renderRss(): void
 	{
 		$this->template->posts = [
 			\Nette\Utils\ArrayHash::from([
@@ -60,12 +61,12 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		];
 	}
 
-	public function renderSitemap()
+	public function renderSitemap(): void
 	{
 		$this->template->sitemap = [0, 1, 2]; //dumb
 	}
 
-	protected function createComponentForm1()
+	protected function createComponentForm1(): UI\Form
 	{
 		$form = new UI\Form();
 		$form->addText('test')->setRequired();
@@ -80,7 +81,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	protected function createComponentForm2()
+	protected function createComponentForm2(): UI\Form
 	{
 		$form = new UI\Form();
 		$form->addText('test');
@@ -91,7 +92,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	protected function createComponentForm3()
+	protected function createComponentForm3(): UI\Form
 	{
 		$form = new \Nette\Application\UI\Form();
 		$form->addText('test');
@@ -101,7 +102,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	protected function createComponentForm4()
+	protected function createComponentForm4(): UI\Form
 	{
 		$form = new UI\Form();
 		$form->addText('test'); //should be required, but it's not
@@ -112,7 +113,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	protected function createComponentFormWithCheckbox()
+	protected function createComponentFormWithCheckbox(): UI\Form
 	{
 		$form = new \Nette\Application\UI\Form();
 		$form->addCheckbox('hello');
@@ -124,7 +125,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	protected function createComponentAjaxForm()
+	protected function createComponentAjaxForm(): UI\Form
 	{
 		$form = new UI\Form();
 		$form->addText('test');
@@ -139,7 +140,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	protected function createComponentCsrfForm()
+	protected function createComponentCsrfForm(): UI\Form
 	{
 		$form = new UI\Form();
 		$form->addProtection('CSRF protection applied!');
@@ -150,13 +151,13 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	public function handleSignal()
+	public function handleSignal(): void
 	{
 		$this->flashMessage('OK');
 		$this->redirect('this');
 	}
 
-	public function handleAjaxSignal()
+	public function handleAjaxSignal(): void
 	{
 		$this->flashMessage('OK');
 		if ($this->isAjax()) {

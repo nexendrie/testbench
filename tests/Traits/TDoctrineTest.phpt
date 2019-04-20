@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Tests\Traits;
 
@@ -19,16 +20,16 @@ class TDoctrineTest extends \Tester\TestCase
 	public function testLazyConnection()
 	{
 		$container = $this->getContainer();
-		$db = $container->getByType('Doctrine\DBAL\Connection');
+		$db = $container->getByType(\Doctrine\DBAL\Connection::class);
 		$db->onConnect[] = function () {
-			Assert::fail('\Testbench\ConnectionMock::$onConnect event should not be called if you do NOT need database');
+			Assert::fail(\Testbench\ConnectionMock::class . '::$onConnect event should not be called if you do NOT need database');
 		};
 		\Tester\Environment::$checkAssertions = FALSE;
 	}
 
 	public function testEntityManager()
 	{
-		Assert::type('\Doctrine\ORM\EntityManagerInterface', $this->getEntityManager());
+		Assert::type(\Doctrine\ORM\EntityManagerInterface::class, $this->getEntityManager());
 	}
 
 	public function testDatabaseCreation()

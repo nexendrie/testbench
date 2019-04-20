@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Tests\Mocks;
 
@@ -11,8 +12,8 @@ $latte->setLoader(new \Latte\Loaders\StringLoader);
 $latte->addProvider('uiControl', new \Testbench\Mocks\ControlMock);
 \Nette\Bridges\ApplicationLatte\UIMacros::install($latte->getCompiler());
 
-Assert::type('Nette\Application\UI\Control', $latte->getProviders()['uiControl']);
-Assert::type('Nette\Application\UI\Control', new \Testbench\ControlMock); //BC
+Assert::type(\Nette\Application\UI\Control::class, $latte->getProviders()['uiControl']);
+Assert::type(\Nette\Application\UI\Control::class, new \Testbench\ControlMock); //BC
 
 Assert::match(
 	'<a href="link|data!(0=10)"></a>',

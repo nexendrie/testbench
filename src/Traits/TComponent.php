@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Testbench;
 
@@ -9,7 +10,7 @@ trait TComponent
 
 	private $__testbench_presenterMock;
 
-	protected function attachToPresenter(IComponent $component, $name = NULL)
+	protected function attachToPresenter(IComponent $component, string $name = NULL): void
 	{
 		if ($name === NULL) {
 			if (!$name = $component->getName()) {
@@ -20,8 +21,8 @@ trait TComponent
 			}
 		}
 		if (!$this->__testbench_presenterMock) {
-			$container = \Testbench\ContainerFactory::create(FALSE);
-			$this->__testbench_presenterMock = $container->getByType('Testbench\Mocks\PresenterMock');
+			$container = ContainerFactory::create(FALSE);
+			$this->__testbench_presenterMock = $container->getByType(\Testbench\Mocks\PresenterMock::class);
 			$container->callInjects($this->__testbench_presenterMock);
 		}
 		$this->__testbench_presenterMock->onStartup[] = function (Mocks\PresenterMock $presenter) use ($component, $name) {
@@ -34,7 +35,7 @@ trait TComponent
 		$this->__testbench_presenterMock->run(new Mocks\ApplicationRequestMock);
 	}
 
-	protected function checkRenderOutput(IComponent $control, $expected, array $renderParameters = [])
+	protected function checkRenderOutput(IComponent $control, string $expected, array $renderParameters = [])
 	{
 		if (!$control->getParent()) {
 			$this->attachToPresenter($control);
