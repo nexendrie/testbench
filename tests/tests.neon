@@ -16,8 +16,9 @@ services:
 
 
 extensions:
-	console: Kdyby\Console\DI\ConsoleExtension()
 	events: Kdyby\Events\DI\EventsExtension
 	annotations: Kdyby\Annotations\DI\AnnotationsExtension
 	doctrine: Kdyby\Doctrine\DI\OrmExtension
-	fakeSession: Kdyby\FakeSession\DI\FakeSessionExtension
+	# already registered by Testbench\ContainerFactory
+	#console: Kdyby\Console\DI\ConsoleExtension
+	#fakeSession: Kdyby\FakeSession\DI\FakeSessionExtension
