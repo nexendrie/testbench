@@ -77,9 +77,9 @@ class Runner
 		$rii = new \RecursiveIteratorIterator($rdi, \RecursiveIteratorIterator::CHILD_FIRST);
 		foreach ($rii as $entry) {
 			if ($entry->isDir()) {
-				rmdir($entry);
+				rmdir((string) $entry);
 			} else {
-				unlink($entry);
+				unlink((string) $entry);
 			}
 		}
 
