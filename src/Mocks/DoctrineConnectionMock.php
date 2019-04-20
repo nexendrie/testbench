@@ -7,16 +7,25 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use Nette\UnexpectedValueException;
 
-/**
- * @method onConnect(DoctrineConnectionMock $self)
- */
 class DoctrineConnectionMock extends \Kdyby\Doctrine\Connection implements \Testbench\Providers\IDatabaseProvider
 {
 
 	private $__testbench_databaseName;
 
 	public $onConnect = [];
+
+	public function onConnect(self $self)
+  {
+    if (is_array($this->onConnect) || $this->onConnect instanceof \Traversable) {
+      foreach ($this->onConnect as $handler) {
+        $handler($self);
+      }
+    } elseif ($this->onConnect !== null) {
+      throw new UnexpectedValueException("Property " . static::class . "::\$onConnect must be array or null, " . gettype($this->onConnect) . ' given.');
+    }
+  }
 
 	public function connect()
 	{
