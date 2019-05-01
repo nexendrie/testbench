@@ -12,7 +12,7 @@ class PresenterMock extends \Nette\Application\UI\Presenter
 	/** @var callable[] */
 	public $onStartup = [];
 
-	public function run(\Nette\Application\Request $request)
+	public function run(\Nette\Application\Request $request): \Nette\Application\IResponse
 	{
 		$this->autoCanonicalize = FALSE;
 		return parent::run($request);
@@ -29,7 +29,7 @@ class PresenterMock extends \Nette\Application\UI\Presenter
 
 	public function afterRender(): void
 	{
-		$this->terminate();
+		$this->sendPayload();
 	}
 
 	public function isAjax(): bool
