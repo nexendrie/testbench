@@ -62,6 +62,6 @@
     "zenify/doctrine-migrations": "Migrate database to the fresh state"
   },
   "replace": {
-    "mrtnzlml/testbench": "*"
+    "mrtnzlml/testbench": ">=2.4"
   }
 }
