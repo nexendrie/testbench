@@ -32,7 +32,7 @@ trait TComponent
 			}
 			$presenter->addComponent($component, $name);
 		};
-		$this->__testbench_presenterMock->run(new Mocks\ApplicationRequestMock);
+		$this->__testbench_presenterMock->run(new \Nette\Application\Request('Foo'));
 	}
 
 	protected function checkRenderOutput(IComponent $control, string $expected, array $renderParameters = [])

@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace Testbench\Mocks;
 
+/**
+ * @deprecated
+ */
 class ApplicationRequestMock extends \Nette\Application\Request
 {
 

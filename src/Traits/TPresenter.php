@@ -57,7 +57,7 @@ trait TPresenter
 		$session->getSection('Nette\Forms\Controls\CsrfProtection')->token = 'testbench.fakeToken';
 		$post = $post + ['_token_' => 'goVdCQ1jk0UQuVArz15RzkW6vpDU9YqTRILjE=']; //CSRF magic! ¯\_(ツ)_/¯
 
-		$request = new Mocks\ApplicationRequestMock(
+		$request = new \Nette\Application\Request(
 			$presenter,
 			$post ? 'POST' : 'GET',
 			['action' => $action] + $params,
