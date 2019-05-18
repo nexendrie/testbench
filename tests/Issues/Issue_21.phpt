@@ -41,9 +41,9 @@ class Issue_21 extends \Tester\TestCase
 		Assert::same('postparamvalue', $appRequest->getPost('postparam'));
 		Assert::same('postparamvalue', $httpRequest->getPost('postparam'));
 
-		Assert::same(1, $appRequest->getParameter('id'));
-		Assert::same(1, $presenter->getParameter('id'));
-		Assert::same(1, $httpRequest->getQuery('id'));
+		Assert::same(1, (int) $appRequest->getParameter('id'));
+		Assert::same(1, (int) $presenter->getParameter('id'));
+		Assert::same(1, (int) $httpRequest->getQuery('id'));
 	}
 
 	public function testRedirectPersistentParameter()

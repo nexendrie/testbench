@@ -22,7 +22,14 @@ class HttpRequestMock extends \Nette\Http\Request
 	) {
 		$url = $url ?: new Http\UrlScript('http://test.bench/');
 		if ($query !== NULL) {
-			$url->setQuery($query);
+		  $query = http_build_query($query);
+		  $address = $url->absoluteUrl;
+		  if($url->query !== "") {
+		    $address = str_replace($url->query, $query, $address);
+      } else {
+		    $address .= "?$query";
+      }
+			$url = new Http\UrlScript($address);
 		}
 		parent::__construct(
 			$url,
