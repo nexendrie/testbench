@@ -21,18 +21,13 @@ class HttpRequestMock extends \Nette\Http\Request
 		$rawBodyCallback = NULL
 	) {
 		$url = $this->prepareUrl($url, $query);
-		parent::__construct(
-			$url,
-			NULL, //deprecated
-			$post,
-			$files,
-			$cookies,
-			$headers,
-			$method,
-			$remoteAddress,
-			$remoteHost,
-			$rawBodyCallback
-		);
+    $params = [
+      $url, NULL, $post, $files, $cookies, $headers, $method, $remoteAddress, $remoteHost, $rawBodyCallback,
+    ];
+    $this->checkParams($params);
+    parent::__construct(
+      ...$params
+    );
 	}
 
 	private function prepareUrl(Http\UrlScript $url, ?array $query): Http\UrlScript
@@ -49,6 +44,13 @@ class HttpRequestMock extends \Nette\Http\Request
       $url = new Http\UrlScript($address);
     }
     return $url;
+  }
+
+  private function checkParams(array &$params): void {
+	  $reflection = new \ReflectionMethod(parent::class, "__construct");
+	  if(count($params) > $reflection->getNumberOfParameters()) {
+	    unset($params[1]);
+    }
   }
 
 }
