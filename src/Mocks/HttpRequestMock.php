@@ -20,17 +20,7 @@ class HttpRequestMock extends \Nette\Http\Request
 		$remoteHost = '127.0.0.1',
 		$rawBodyCallback = NULL
 	) {
-		$url = $url ?: new Http\UrlScript('http://test.bench/');
-		if ($query !== NULL) {
-		  $query = http_build_query($query);
-		  $address = $url->absoluteUrl;
-		  if($url->query !== "") {
-		    $address = str_replace($url->query, $query, $address);
-      } else {
-		    $address .= "?$query";
-      }
-			$url = new Http\UrlScript($address);
-		}
+		$url = $this->prepareUrl($url, $query);
 		parent::__construct(
 			$url,
 			NULL, //deprecated
@@ -44,5 +34,21 @@ class HttpRequestMock extends \Nette\Http\Request
 			$rawBodyCallback
 		);
 	}
+
+	private function prepareUrl(Http\UrlScript $url, ?array $query): Http\UrlScript
+  {
+    $url = $url ?: new Http\UrlScript('http://test.bench/');
+    if ($query !== NULL) {
+      $query = http_build_query($query);
+      $address = $url->absoluteUrl;
+      if($url->query !== "") {
+        $address = str_replace($url->query, $query, $address);
+      } else {
+        $address .= "?$query";
+      }
+      $url = new Http\UrlScript($address);
+    }
+    return $url;
+  }
 
 }
