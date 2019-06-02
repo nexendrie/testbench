@@ -34,7 +34,7 @@
     "kdyby/doctrine-dbal-batchimport": "dev-master",
     "kdyby/events": "^3.0",
     "nette/database": "^2.4 || ^3.0",
-    "zenify/doctrine-migrations": "^2.3"
+    "nettrine/migrations": "^0.4"
   },
   "autoload": {
     "psr-4": {
@@ -59,7 +59,7 @@
     "kdyby/doctrine": "Allows enhanced database tests using Doctrine",
     "kdyby/doctrine-dbal-batchimport": "Allows SQL scripts import for Doctrine (required with kdyby/doctrine)",
     "nette/database": "Allows enhanced database tests using Nette\\Database",
-    "zenify/doctrine-migrations": "Migrate database to the fresh state"
+    "nettrine/migrations": "Migrate database to the fresh state"
   },
   "replace": {
     "mrtnzlml/testbench": ">=2.4"

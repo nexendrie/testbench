@@ -80,10 +80,10 @@ class DoctrineConnectionMock extends \Kdyby\Doctrine\Connection implements \Test
 		}
 
 		if ($config['migrations'] === TRUE) {
-			if (class_exists(\Zenify\DoctrineMigrations\Configuration\Configuration::class)) {
-				/** @var \Zenify\DoctrineMigrations\Configuration\Configuration $migrationsConfig */
-				$migrationsConfig = $container->getByType(\Zenify\DoctrineMigrations\Configuration\Configuration::class);
-				$migrationsConfig->__construct($container, $connection);
+			if (class_exists(\Nettrine\Migrations\ContainerAwareConfiguration::class)) {
+				/** @var \Nettrine\Migrations\ContainerAwareConfiguration $migrationsConfig */
+				$migrationsConfig = $container->getByType(\Nettrine\Migrations\ContainerAwareConfiguration::class);
+				$migrationsConfig->__construct($connection);
 				$migrationsConfig->registerMigrationsFromDirectory($migrationsConfig->getMigrationsDirectory());
 				$migration = new \Doctrine\DBAL\Migrations\Migration($migrationsConfig);
 				$migration->migrate($migrationsConfig->getLatestVersion());
