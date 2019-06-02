@@ -59,7 +59,12 @@ class DoctrineConnectionMock extends \Kdyby\Doctrine\Connection implements \Test
 				} else { // always create new test database
 					$this->__testbench_database_setup($connection, $container);
 				}
-			} catch (\Exception $e) {
+			} catch(\Doctrine\DBAL\Migrations\MigrationException $e) {
+			  //  do not throw an exception if there are no migrations
+        if($e->getCode() !== 4) {
+          \Tester\Assert::fail($e->getMessage());
+        }
+      } catch (\Exception $e) {
 				\Tester\Assert::fail($e->getMessage());
 			}
 		};
