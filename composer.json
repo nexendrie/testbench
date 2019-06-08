@@ -33,7 +33,8 @@
     "kdyby/doctrine-cache": "^2.5",
     "kdyby/doctrine-dbal-batchimport": "dev-master",
     "nette/database": "^2.4 || ^3.0",
-    "nettrine/migrations": "^0.4"
+    "nettrine/migrations": "^0.4",
+    "nette/security": "^2.4"
   },
   "autoload": {
     "psr-4": {
