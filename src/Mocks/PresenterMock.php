@@ -18,6 +18,9 @@ class PresenterMock extends \Nette\Application\UI\Presenter
 		return parent::run($request);
 	}
 
+  /**
+   * @throws \Nette\Application\AbortException
+   */
 	public function startup(): void
 	{
 		if ($this->getParameter('__terminate') === TRUE) {
@@ -27,6 +30,9 @@ class PresenterMock extends \Nette\Application\UI\Presenter
 		$this->onStartup($this);
 	}
 
+  /**
+   * @throws \Nette\Application\AbortException
+   */
 	public function afterRender(): void
 	{
 		$this->sendPayload();

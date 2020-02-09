@@ -71,7 +71,10 @@ class DoctrineConnectionMock extends \Kdyby\Doctrine\Connection implements \Test
 		parent::__construct($params, $driver, $config, $eventManager);
 	}
 
-	/** @internal */
+  /**
+   * @throws DBAL\Migrations\MigrationException
+   * @internal
+   */
 	public function __testbench_database_setup($connection, \Nette\DI\Container $container, $persistent = FALSE)
 	{
 		$config = $container->parameters['testbench'];

@@ -63,11 +63,17 @@ class ContainerFactory
 		}
 	}
 
+  /**
+   * @throws \Exception
+   */
 	final public function __clone()
 	{
 		throw new \Exception('Clone is not allowed');
 	}
 
+  /**
+   * @throws \Exception
+   */
 	final public function __wakeup(): void
 	{
 		throw new \Exception('Unserialization is not allowed');
