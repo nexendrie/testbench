@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/nexendrie/testbench.svg?branch=master)](https://travis-ci.com/nexendrie/testbench)
 
-Tested against PHP 7.2 and 7.3. Please read [this wiki](https://github.com/mrtnzlml/testbench/wiki).
+Tested against PHP 7.2, 7.3 and 7.4. Please read [this wiki](https://github.com/mrtnzlml/testbench/wiki).
 
 Heavily inspired by these GitHub projects:
 - [Kdyby/TesterExtras](https://github.com/Kdyby/TesterExtras), [Librette](https://github.com/librette) tests, [Nette](https://github.com/nette) tests and [damejidlo/modular-testcase](https://github.com/damejidlo/modular-testcase)
@@ -17,7 +17,7 @@ You can find few examples in this readme or take a look to the `tests` folder in
 
 Installation
 ------------
-```
+```bash
 $ composer require nexendrie/testbench
 ```
 
@@ -54,7 +54,7 @@ Testbench\Bootstrap::setup(__DIR__ . '/_temp', function (\Nette\Configurator $co
 It's important, that we are not creating dependency injection container here. You can use [autoload](https://getcomposer.org/doc/04-schema.md#autoload) from composer if you don't want to use robot loader.
 You should also create config file e.g. `tests.neon`. This file is needed only for database tests at this moment. In this file you should configure your project before tests:
 
-```neon
+```yaml
 testbench:
 	sqls: #what should be loaded after empty database creation
 		- %appDir%/../sqls/1.sql
