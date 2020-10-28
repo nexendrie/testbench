@@ -35,3 +35,8 @@ after_failure:
 
 notifications:
   email: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - vendor
