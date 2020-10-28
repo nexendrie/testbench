@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/nexendrie/testbench.svg?branch=master)](https://travis-ci.com/nexendrie/testbench)
 
-Tested against PHP 7.2, 7.3 and 7.4. Please read [this wiki](https://github.com/mrtnzlml/testbench/wiki).
+Tested against PHP 7.4. Please read [this wiki](https://github.com/mrtnzlml/testbench/wiki).
 
 Heavily inspired by these GitHub projects:
 - [Kdyby/TesterExtras](https://github.com/Kdyby/TesterExtras), [Librette](https://github.com/librette) tests, [Nette](https://github.com/nette) tests and [damejidlo/modular-testcase](https://github.com/damejidlo/modular-testcase)
