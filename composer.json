@@ -63,5 +63,8 @@
   },
   "replace": {
     "mrtnzlml/testbench": ">=2.4"
+  },
+  "conflict": {
+    "doctrine/orm": ">=2.7.3"
   }
 }
