@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.com/nexendrie/testbench.svg?branch=master)](https://travis-ci.com/nexendrie/testbench)
+Testbench
+=========
+
+[![Total Downloads](https://poser.pugx.org/nexendrie/testbench/downloads)](https://packagist.org/packages/nexendrie/testbench)  [![Latest Stable Version](https://poser.pugx.org/nexendrie/testbench/v/stable)](https://packagist.org/packages/nexendrie/testbench) [![Build Status](https://travis-ci.com/nexendrie/testbench.svg?branch=master)](https://travis-ci.com/nexendrie/testbench)
 
 Tested against PHP 7.4. Please read [this wiki](https://github.com/mrtnzlml/testbench/wiki).
 
@@ -11,17 +14,19 @@ And article(s):
 
 Simple test bench for Nette Framework projects
 ----------------------------------------------
+
 Write integration tests as simple as possible. This project helps you to write tests very quickly. DRY! The main goal of this project is to make testing very simple for everyone and help with the difficult start.
 
 You can find few examples in this readme or take a look to the `tests` folder in this project.
 
 Installation
 ------------
+
 ```bash
 $ composer require nexendrie/testbench
 ```
 
-Testbench itself doesn't need database. But if you want to use `Testbench\TDoctrine` or `Testbench\TNetteDatabase` trait you have to setup database for the first connection. You should use standard database configuration - nothing special. You can see example in `tests/tests.local.neon.dist` file. Empty database is good enough for Testbench. Supported databases are:
+Testbench itself doesn't need database. But if you want to use `Testbench\TDoctrine` or `Testbench\TNetteDatabase` trait you have to set up database for the first connection. You should use standard database configuration - nothing special. You can see example in `tests/tests.local.neon.dist` file. Empty database is good enough for Testbench. Supported databases are:
 
 - Doctrine 2
 - Nette\Database
@@ -30,7 +35,8 @@ For another databases please send PR or open issue.
 
 Minimal code
 ------------
-At first you need classic bootstrap file (just example, DIY):
+
+At first, you need classic bootstrap file (just example, DIY):
 
 ```php
 <?php
@@ -64,7 +70,7 @@ testbench:
 And you are ready to go:
 
 ```php
-<?php //HomepagePresenterTest.phpt
+<?php
 
 require __DIR__ . '/../bootstrap.php';
 
@@ -96,7 +102,8 @@ You can easily write cover with tests UI\Controls, restricted areas, forms, sign
 Please read [this article](http://zlml.cz/jednoduche-testovani-pro-uplne-kazdeho).
 
 Give it a shot!
------------
+---------------
+
 Look at the tests in this project. You'll see how to use it properly. There are examples in `tests` folder or in the wiki. Learn how to use these traits:
 
 - [Testbench\TCompiledContainer](https://github.com/mrtnzlml/testbench/wiki/Testbench%5CTCompiledContainer)
