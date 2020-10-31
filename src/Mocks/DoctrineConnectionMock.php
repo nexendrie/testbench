@@ -24,12 +24,13 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
    */
     public function onConnect(self $self)
     {
-        if (is_array($this->onConnect)) {
+        if (is_array($this->onConnect) || $this->onConnect instanceof \Traversable) {
             foreach ($this->onConnect as $handler) {
                 $handler($self);
             }
+        } elseif ($this->onConnect !== null) {
+            throw new UnexpectedValueException("Property " . static::class . "::\$onConnect must be array or null, " . gettype($this->onConnect) . ' given.');
         }
-        throw new UnexpectedValueException("Property " . static::class . "::\$onConnect must be array, " . gettype($this->onConnect) . ' given.');
     }
 
   /**
