@@ -8,7 +8,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 {
 
     /** @persistent */
-    public string $persistentParameter;
+    public string $persistentParameter = '';
 
     public function actionJson(): void
     {
