@@ -8,6 +8,8 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Exception\MigrationException;
 use Kdyby\Doctrine\Connection;
 use Nette\UnexpectedValueException;
 
@@ -70,7 +72,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
                 } else { // always create new test database
                     $this->__testbench_database_setup($connection, $container);
                 }
-            } catch (\Doctrine\DBAL\Migrations\MigrationException $e) {
+            } catch (MigrationException $e) {
               //  do not throw an exception if there are no migrations
                 if ($e->getCode() !== 4) {
                     \Tester\Assert::fail($e->getMessage());
@@ -84,7 +86,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
 
   /**
    * @param Connection $connection
-   * @throws DBAL\Migrations\MigrationException
+   * @throws MigrationException
    * @internal
    */
     public function __testbench_database_setup($connection, \Nette\DI\Container $container, $persistent = false)
@@ -104,8 +106,12 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
                 /** @var \Nettrine\Migrations\ContainerAwareConfiguration $migrationsConfig */
                 $migrationsConfig = $container->getByType(\Nettrine\Migrations\ContainerAwareConfiguration::class);
                 $migrationsConfig->__construct($connection);
-                $migrationsConfig->registerMigrationsFromDirectory($migrationsConfig->getMigrationsDirectory());
-                $migration = new \Doctrine\DBAL\Migrations\Migration($migrationsConfig);
+                $migrationsConfig->registerMigrationsFromDirectory((string) $migrationsConfig->getMigrationsDirectory());
+                $dependencyFactory = new DependencyFactory($migrationsConfig);
+                $migrationsRepository = $dependencyFactory->getMigrationRepository();
+                $outputWriter = $dependencyFactory->getOutputWriter();
+                $stopwatch = $dependencyFactory->getStopwatch();
+                $migration = new \Doctrine\Migrations\Migrator($migrationsConfig, $migrationsRepository, $outputWriter, $stopwatch);
                 $migration->migrate($migrationsConfig->getLatestVersion());
             }
         }
