@@ -1,14 +1,20 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 class ScaffoldPresenter extends Nette\Application\UI\Presenter
 {
 
-	const TEST = 'xyz';
+    public const TEST = 'xyz';
 
-	public function renderDefault($variable, $optional = 'optionalValue', $nullable = NULL, $const = ScaffoldPresenter::TEST): void
-	{
-		$this->template->variable = $variable;
-	}
-
+  /**
+   * @param mixed $variable
+   * @param mixed $optional
+   * @param mixed $nullable
+   * @param mixed $const
+   */
+    public function renderDefault($variable, $optional = 'optionalValue', $nullable = null, $const = self::TEST): void
+    {
+        $this->template->variable = $variable;
+    }
 }

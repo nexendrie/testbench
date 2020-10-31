@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Issues;
 
@@ -8,31 +9,29 @@ use Tester\FileMock;
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 \Testbench\Bootstrap::setup(dirname(__DIR__) . '/_temp', function (\Nette\Configurator $configurator) {
-	$config = <<<CONFIG
+    $config = <<<CONFIG
 application:
 	scanComposer: no
 routing:
 	routes:
 		'/x/y[[[/<presenter>]/<action>][/<id>]]': 'Presenter:default'
 CONFIG;
-	$configurator->addConfig(FileMock::create($config, 'neon'));
-	$configurator->addParameters(['appDir' => dirname(__DIR__) . '/../src',]);
+    $configurator->addConfig(FileMock::create($config, 'neon'));
+    $configurator->addParameters(['appDir' => dirname(__DIR__) . '/../src',]);
 });
 
 /**
  * @testCase
  * @see https://github.com/mrtnzlml/testbench/issues/20
  */
-final class Issue_20 extends \Tester\TestCase
+final class Issue20 extends \Tester\TestCase
 {
+    use \Testbench\TPresenter;
 
-	use \Testbench\TPresenter;
-
-	public function testRenderDefault()
-	{
-		$this->checkAction('Presenter:default');
-	}
-
+    public function testRenderDefault()
+    {
+        $this->checkAction('Presenter:default');
+    }
 }
 
-(new Issue_20)->run();
+(new Issue20())->run();

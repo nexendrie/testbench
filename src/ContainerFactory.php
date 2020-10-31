@@ -1,82 +1,85 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Testbench;
+
+use Nette\DI\Container;
+use Nette\DI\CompilerExtension;
 
 /**
  * @internal
  */
 class ContainerFactory
 {
-	use \Nette\SmartObject;
+    use \Nette\SmartObject;
 
-	private static $container;
+    private static ?Container $container = null;
 
-	private function __construct()
-	{
-		//Cannot be initialized
-	}
+    private function __construct()
+    {
+        //Cannot be initialized
+    }
 
-	final public static function create(bool $new = FALSE, array $config = []): \Nette\DI\Container
-	{
-		if ($new || self::$container === NULL) {
-			$configurator = new \Nette\Configurator();
-			$configurator->addParameters($config);
+    final public static function create(bool $new = false, array $config = []): Container
+    {
+        if ($new || self::$container === null) {
+            $configurator = new \Nette\Configurator();
+            $configurator->addParameters($config);
 
-			$configurator->onCompile[] = function (\Nette\Configurator $configurator, \Nette\DI\Compiler $compiler) use ($config) {
-				$compiler->addConfig($config);
-				$compiler->addExtension('testbench', new TestbenchExtension);
-				self::registerAdditionalExtension($compiler, 'fakeSession', new \Kdyby\FakeSession\DI\FakeSessionExtension);
-				if (class_exists(\Kdyby\Console\DI\ConsoleExtension::class)) {
-					self::registerAdditionalExtension($compiler, 'console', new \Kdyby\Console\DI\ConsoleExtension);
-				}
-			};
+            $configurator->onCompile[] = function (\Nette\Configurator $configurator, \Nette\DI\Compiler $compiler) use ($config) {
+                $compiler->addConfig($config);
+                $compiler->addExtension('testbench', new TestbenchExtension());
+                self::registerAdditionalExtension($compiler, 'fakeSession', new \Kdyby\FakeSession\DI\FakeSessionExtension());
+                if (class_exists(\Kdyby\Console\DI\ConsoleExtension::class)) {
+                    self::registerAdditionalExtension($compiler, 'console', new \Kdyby\Console\DI\ConsoleExtension());
+                }
+            };
 
-			$configurator->setTempDirectory(Bootstrap::$tempDir); // shared container for performance purposes
-			$configurator->setDebugMode(FALSE);
+            $configurator->setTempDirectory(Bootstrap::$tempDir); // shared container for performance purposes
+            $configurator->setDebugMode(false);
 
-			if (is_callable(Bootstrap::$onBeforeContainerCreate)) {
-				call_user_func_array(Bootstrap::$onBeforeContainerCreate, [$configurator]);
-			}
+            if (is_callable(Bootstrap::$onBeforeContainerCreate)) {
+                call_user_func_array(Bootstrap::$onBeforeContainerCreate, [$configurator]);
+            }
 
-			self::$container = $configurator->createContainer();
-		}
-		return self::$container;
-	}
+            self::$container = $configurator->createContainer();
+        }
+        return self::$container;
+    }
 
-	/**
-	 * Register extension if not registered by user.
-	 */
-	private static function registerAdditionalExtension(\Nette\DI\Compiler $compiler, string $name, $newExtension): void
-	{
-		$extensions = [];
-		$config = $compiler->getConfig();
-		foreach (isset($config['extensions']) ? $config['extensions'] : [] as $extension) {
-			if (is_string($extension)) {
-				$extensions[] = $extension;
-			} elseif ($extension instanceof \Nette\DI\Statement) {
-				$extensions[] = $extension->getEntity();
-			}
-		}
-		if (!in_array(get_class($newExtension), $extensions)) {
-			$compiler->addExtension($name, $newExtension);
-		}
-	}
-
-  /**
-   * @throws \Exception
-   */
-	final public function __clone()
-	{
-		throw new \Exception('Clone is not allowed');
-	}
+    /**
+     * Register extension if not registered by user.
+     */
+    private static function registerAdditionalExtension(\Nette\DI\Compiler $compiler, string $name, CompilerExtension $newExtension): void
+    {
+        $extensions = [];
+        $config = $compiler->getConfig();
+        foreach (isset($config['extensions']) ? $config['extensions'] : [] as $extension) {
+            if (is_string($extension)) {
+                $extensions[] = $extension;
+            } elseif ($extension instanceof \Nette\DI\Statement) {
+                $extensions[] = $extension->getEntity();
+            }
+        }
+        if (!in_array(get_class($newExtension), $extensions)) {
+            $compiler->addExtension($name, $newExtension);
+        }
+    }
 
   /**
    * @throws \Exception
    */
-	final public function __wakeup(): void
-	{
-		throw new \Exception('Unserialization is not allowed');
-	}
+    final public function __clone()
+    {
+        throw new \Exception('Clone is not allowed');
+    }
 
+  /**
+   * @throws \Exception
+   */
+    final public function __wakeup(): void
+    {
+        throw new \Exception('Unserialization is not allowed');
+    }
 }

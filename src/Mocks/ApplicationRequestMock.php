@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Testbench\Mocks;
 
@@ -9,10 +10,13 @@ namespace Testbench\Mocks;
 class ApplicationRequestMock extends \Nette\Application\Request
 {
 
-	public function __construct($name = NULL, $method = NULL, array $params = [], array $post = [], array $files = [], array $flags = [])
-	{
-		$name = $name ?: 'Foo'; //It's going to be terminated anyway (see: \PresenterMock::afterRender)
-		parent::__construct($name, $method, $params, $post, $files, $flags);
-	}
-
+  /**
+   * @param string|null $name
+   * @param string|null $method
+   */
+    public function __construct($name = null, $method = null, array $params = [], array $post = [], array $files = [], array $flags = [])
+    {
+        $name = $name ?: 'Foo'; //It's going to be terminated anyway (see: \PresenterMock::afterRender)
+        parent::__construct($name, $method, $params, $post, $files, $flags);
+    }
 }

@@ -20,6 +20,7 @@ matrix:
     fast_finish: true
 
 before_script:
+  - wget https://www.phing.info/get/phing-latest.phar && mv phing-latest.phar phing && chmod +x phing
   - composer selfupdate --no-progress
   - travis_retry composer install --prefer-dist
   - mkdir tests/_temp
@@ -27,7 +28,7 @@ before_script:
   - "sh -c \"if [ '$DB' = 'pgsql' ]; then cp tests/_helpers/pgsql.neon tests/tests.local.neon; fi\""
 
 script:
-  - src/run-tests --bootstrap tests/bootstrap.php
+  - ./phing test
 
 after_failure:
   # Print *.actual content

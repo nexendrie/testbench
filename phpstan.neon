@@ -1,0 +1,18 @@
+includes:
+    - vendor/phpstan/phpstan-nette/extension.neon
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    excludes_analyse:
+        - %rootDir%/../../../tests/temp/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    treatPhpDocTypesAsCertain: false
+    earlyTerminatingMethodCalls:
+        Tester\Assert:
+            - fail
+    ignoreErrors:
+        - '#Parameter \#1 \$iterator of class Nette\\Iterators\\CachingIterator constructor expects Iterator, array given#'
+        - '#Method Testbench\\CustomPresenterTestCase::getException\(\) should return Exception but returns Exception\|nul#'
