@@ -44,6 +44,7 @@
   <rule ref="PSR12"/>
   <rule ref="PSR1.Files.SideEffects">
     <exclude-pattern>*/tests/*</exclude-pattern>
+    <exclude-pattern>*/src/Testbench.php</exclude-pattern>
   </rule>
   <rule ref="PSR1.Classes.ClassDeclaration">
     <exclude-pattern>*/tests/_helpers/*</exclude-pattern>

@@ -15,7 +15,7 @@ use Nette\Reflection\ClassType;
 class NetteDatabaseConnectionMock extends Connection implements \Testbench\Providers\IDatabaseProvider
 {
 
-    private ?string $__testbench_databaseName = null;
+    private ?string $testbench_databaseName = null;
 
   /**
    * NetteDatabaseConnectionMock constructor.
@@ -28,7 +28,7 @@ class NetteDatabaseConnectionMock extends Connection implements \Testbench\Provi
     {
         $container = \Testbench\ContainerFactory::create(false);
         $this->onConnect[] = function (NetteDatabaseConnectionMock $connection) use ($container) {
-            if ($this->__testbench_databaseName !== null) { //already initialized (needed for pgsql)
+            if ($this->testbench_databaseName !== null) { //already initialized (needed for pgsql)
                 return;
             }
             try {
@@ -39,7 +39,7 @@ class NetteDatabaseConnectionMock extends Connection implements \Testbench\Provi
                     if ($registry->registerDatabase($dbName)) {
                         $this->__testbench_database_setup($connection, $container, true);
                     } else {
-                        $this->__testbench_databaseName = $dbName;
+                        $this->testbench_databaseName = $dbName;
                         $this->__testbench_database_change($connection, $container);
                     }
                 } else { // always create new test database
@@ -60,7 +60,7 @@ class NetteDatabaseConnectionMock extends Connection implements \Testbench\Provi
     public function __testbench_database_setup($connection, \Nette\DI\Container $container, $persistent = false)
     {
         $config = $container->parameters['testbench'];
-        $this->__testbench_databaseName = $config['dbprefix'] . getenv(\Tester\Environment::THREAD);
+        $this->testbench_databaseName = $config['dbprefix'] . getenv(\Tester\Environment::THREAD);
 
         $this->__testbench_database_drop($connection, $container);
         $this->__testbench_database_create($connection, $container);
@@ -83,7 +83,7 @@ class NetteDatabaseConnectionMock extends Connection implements \Testbench\Provi
      */
     public function __testbench_database_create($connection, \Nette\DI\Container $container)
     {
-        $connection->query("CREATE DATABASE {$this->__testbench_databaseName}");
+        $connection->query("CREATE DATABASE {$this->testbench_databaseName}");
         $this->__testbench_database_change($connection, $container);
     }
 
@@ -95,9 +95,9 @@ class NetteDatabaseConnectionMock extends Connection implements \Testbench\Provi
     public function __testbench_database_change($connection, \Nette\DI\Container $container)
     {
         if ($connection->getSupplementalDriver() instanceof MySqlDriver) {
-            $connection->query("USE {$this->__testbench_databaseName}");
+            $connection->query("USE {$this->testbench_databaseName}");
         } else {
-            $this->__testbench_database_connect($connection, $container, $this->__testbench_databaseName);
+            $this->__testbench_database_connect($connection, $container, $this->testbench_databaseName);
         }
     }
 
@@ -111,7 +111,7 @@ class NetteDatabaseConnectionMock extends Connection implements \Testbench\Provi
         if (!$connection->getSupplementalDriver() instanceof MySqlDriver) {
             $this->__testbench_database_connect($connection, $container);
         }
-        $connection->query("DROP DATABASE IF EXISTS {$this->__testbench_databaseName}");
+        $connection->query("DROP DATABASE IF EXISTS {$this->testbench_databaseName}");
     }
 
     /**

@@ -14,7 +14,7 @@ use Nette\UnexpectedValueException;
 class DoctrineConnectionMock extends Connection implements \Testbench\Providers\IDatabaseProvider
 {
 
-    private ?string $__testbench_databaseName = null;
+    private ?string $testbench_databaseName = null;
 
     /** @var callable[] */
     public $onConnect = [];
@@ -53,7 +53,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
     ) {
         $container = \Testbench\ContainerFactory::create(false);
         $this->onConnect[] = function (DoctrineConnectionMock $connection) use ($container) {
-            if ($this->__testbench_databaseName !== null) { //already initialized (needed for pgsql)
+            if ($this->testbench_databaseName !== null) { //already initialized (needed for pgsql)
                 return;
             }
             try {
@@ -64,7 +64,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
                     if ($registry->registerDatabase($dbName)) {
                         $this->__testbench_database_setup($connection, $container, true);
                     } else {
-                        $this->__testbench_databaseName = $dbName;
+                        $this->testbench_databaseName = $dbName;
                         $this->__testbench_database_change($connection, $container);
                     }
                 } else { // always create new test database
@@ -90,7 +90,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
     public function __testbench_database_setup($connection, \Nette\DI\Container $container, $persistent = false)
     {
         $config = $container->parameters['testbench'];
-        $this->__testbench_databaseName = $config['dbprefix'] . getenv(\Tester\Environment::THREAD);
+        $this->testbench_databaseName = $config['dbprefix'] . getenv(\Tester\Environment::THREAD);
 
         $this->__testbench_database_drop($connection, $container);
         $this->__testbench_database_create($connection, $container);
@@ -124,7 +124,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
      */
     public function __testbench_database_create($connection, \Nette\DI\Container $container)
     {
-        $connection->exec("CREATE DATABASE {$this->__testbench_databaseName}");
+        $connection->exec("CREATE DATABASE {$this->testbench_databaseName}");
         $this->__testbench_database_change($connection, $container);
     }
 
@@ -136,9 +136,9 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
     public function __testbench_database_change($connection, \Nette\DI\Container $container)
     {
         if ($connection->getDatabasePlatform() instanceof MySqlPlatform) {
-            $connection->exec("USE {$this->__testbench_databaseName}");
+            $connection->exec("USE {$this->testbench_databaseName}");
         } else {
-            $this->__testbench_database_connect($connection, $container, $this->__testbench_databaseName);
+            $this->__testbench_database_connect($connection, $container, $this->testbench_databaseName);
         }
     }
 
@@ -152,7 +152,7 @@ class DoctrineConnectionMock extends Connection implements \Testbench\Providers\
         if (!$connection->getDatabasePlatform() instanceof MySqlPlatform) {
             $this->__testbench_database_connect($connection, $container);
         }
-        $connection->exec("DROP DATABASE IF EXISTS {$this->__testbench_databaseName}");
+        $connection->exec("DROP DATABASE IF EXISTS {$this->testbench_databaseName}");
     }
 
     /**
