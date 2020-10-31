@@ -32,7 +32,7 @@ trait TPresenter
     {
         $destination = ltrim($destination, ':');
         $pos = (int) strrpos($destination, ':');
-        $presenter = substr($destination, 0, $pos);
+        $presenterName = substr($destination, 0, $pos);
         $action = substr($destination, $pos + 1) ?: 'default';
 
         $container = ContainerFactory::create(false);
@@ -43,7 +43,7 @@ trait TPresenter
         /** @var IPresenterFactory $presenterFactory */
         $presenterFactory = $container->getByType(IPresenterFactory::class);
         /** @var Presenter $presenter */
-        $presenter = $presenterFactory->createPresenter($presenter);
+        $presenter = $presenterFactory->createPresenter($presenterName);
         $this->testbench_presenter = $presenter;
         $this->testbench_presenter->autoCanonicalize = false;
         $this->testbench_presenter->invalidLinkMode = Presenter::INVALID_LINK_EXCEPTION;
@@ -64,7 +64,7 @@ trait TPresenter
         $post = $post + ['_token_' => 'goVdCQ1jk0UQuVArz15RzkW6vpDU9YqTRILjE=']; //CSRF magic! ¯\_(ツ)_/¯
 
         $request = new \Nette\Application\Request(
-            $presenter,
+            $presenterName,
             $post ? 'POST' : 'GET',
             ['action' => $action] + $params,
             $post
@@ -130,7 +130,7 @@ trait TPresenter
 
             $html = (string) $response->getSource();
             //DOMDocument doesn't handle HTML tags inside of script tags very well
-      /** @var string $html */
+            /** @var string $html */
             $html = preg_replace('~<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>~', '', $html); //http://stackoverflow.com/a/6660315/3135248
             $dom = @\Tester\DomQuery::fromHtml($html);
             Assert::true($dom->has('html'), "missing 'html' tag");
