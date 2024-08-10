@@ -14,7 +14,6 @@ parameters:
         Tester\Assert:
             - fail
     ignoreErrors:
-        - '#Parameter \#1 \$iterator of class Nette\\Iterators\\CachingIterator constructor expects Iterator, array given#'
         - '#Method Testbench\\CustomPresenterTestCase::getException\(\) should return Exception but returns Exception\|nul#'
         - '#Instanceof between \*NEVER\* and Traversable will always evaluate to false#'
         - '#Result of \|\| is always true#'
