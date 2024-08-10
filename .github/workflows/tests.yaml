@@ -28,6 +28,7 @@ jobs:
           coverage: pcov
       - run: mkdir tests/_temp
       - run: cp tests/_helpers/mysql.neon tests/tests.local.neon
+      - run: composer install --prefer-dist --no-progress --no-interaction
       - run: phing test
   tests_pgsql:
     name: Tests on PostgreSQL
@@ -52,4 +53,5 @@ jobs:
           coverage: pcov
       - run: mkdir tests/_temp
       - run: cp tests/_helpers/pgsql.neon tests/tests.local.neon
+      - run: composer install --prefer-dist --no-progress --no-interaction
       - run: phing test
