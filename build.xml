@@ -23,6 +23,10 @@
     <exec executable="src/run-tests" logoutput="true" passthru="true" checkreturn="true">
       <arg value="--bootstrap"/>
       <arg path="tests/bootstrap.php"/>
+      <arg value="--coverage"/>
+      <arg path="./coverage.html"/>
+      <arg value="--coverage-src"/>
+      <arg path="./src"/>
     </exec>
   </target>
   <target name="test" depends="lint,cs,phpstan,tests"/>
