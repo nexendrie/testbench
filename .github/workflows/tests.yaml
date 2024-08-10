@@ -1,0 +1,55 @@
+name: Tests
+on:
+  - push
+  - pull_request
+
+jobs:
+  tests_mysql:
+    name: Tests on MySql
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - '7.4'
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: tests
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer, phing
+          coverage: pcov
+      - run: mkdir tests/_temp
+      - run: cp tests/_helpers/mysql.neon tests/tests.local.neon
+      - run: phing test
+  tests_pgsql:
+    name: Tests on PostgreSQL
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - '7.4'
+    services:
+      mysql:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer, phing
+          coverage: pcov
+      - run: mkdir tests/_temp
+      - run: cp tests/_helpers/pgsql.neon tests/tests.local.neon
+      - run: phing test
