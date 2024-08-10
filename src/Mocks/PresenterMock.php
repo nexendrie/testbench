@@ -9,7 +9,6 @@ namespace Testbench\Mocks;
  */
 class PresenterMock extends \Nette\Application\UI\Presenter
 {
-
     /** @var callable[] */
     public $onStartup = [];
 

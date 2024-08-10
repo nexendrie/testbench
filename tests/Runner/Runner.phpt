@@ -14,7 +14,6 @@ require __DIR__ . '/../bootstrap.php';
  */
 class Runner extends \Tester\TestCase
 {
-
     private $tempDir;
 
     /** @var \Testbench\Runner */

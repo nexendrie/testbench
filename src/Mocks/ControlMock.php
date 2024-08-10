@@ -6,7 +6,6 @@ namespace Testbench\Mocks;
 
 class ControlMock extends \Nette\Application\UI\Control
 {
-
   /**
    * @param string $destination
    * @param array|mixed $args

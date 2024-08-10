@@ -9,7 +9,6 @@ namespace Testbench\Providers;
  */
 interface IDatabaseProvider
 {
-
   /**
    * Perform complete database setup (should drop and create database, import sqls, run migrations).
    * Register shutdown function only if it's not persistent setup.

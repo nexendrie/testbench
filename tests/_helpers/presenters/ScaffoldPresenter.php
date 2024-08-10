@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 class ScaffoldPresenter extends Nette\Application\UI\Presenter
 {
-
     public const TEST = 'xyz';
 
   /**

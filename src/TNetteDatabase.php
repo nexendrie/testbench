@@ -6,7 +6,6 @@ namespace Testbench;
 
 trait TNetteDatabase
 {
-
     protected function getContext(): \Nette\Database\Context
     {
         $container = ContainerFactory::create(false);

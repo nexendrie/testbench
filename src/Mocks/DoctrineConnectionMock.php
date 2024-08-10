@@ -13,7 +13,6 @@ use Nette\UnexpectedValueException;
 
 class DoctrineConnectionMock extends Connection implements \Testbench\Providers\IDatabaseProvider
 {
-
     private ?string $testbench_databaseName = null;
 
     /** @var callable[] */

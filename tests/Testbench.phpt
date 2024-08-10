@@ -13,7 +13,6 @@ require __DIR__ . '/bootstrap.php';
  */
 class Testbench extends \Tester\TestCase
 {
-
     public function testConstants()
     {
         Assert::same(0, \Testbench::QUICK);

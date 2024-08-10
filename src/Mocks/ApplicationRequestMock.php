@@ -9,7 +9,6 @@ namespace Testbench\Mocks;
  */
 class ApplicationRequestMock extends \Nette\Application\Request
 {
-
   /**
    * @param string|null $name
    * @param string|null $method

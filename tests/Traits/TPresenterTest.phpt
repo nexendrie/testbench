@@ -14,7 +14,6 @@ require getenv('BOOTSTRAP');
  */
 class TPresenterTest extends \Testbench\CustomPresenterTestCase
 {
-
     public function testClassicRender()
     {
         $this->checkAction('Presenter:default');

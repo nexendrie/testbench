@@ -6,7 +6,6 @@ namespace Testbench;
 
 class Bootstrap
 {
-
   /** @var string */
     public static $tempDir;
 

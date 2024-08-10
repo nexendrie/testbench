@@ -6,7 +6,6 @@ namespace Testbench;
 
 class Runner
 {
-
     public function prepareArguments(array $args, string $testsDir): array
     {
         $args = new \Nette\Iterators\CachingIterator($args);

@@ -14,7 +14,6 @@ use Nette\Reflection\ClassType;
  */
 class NetteDatabaseConnectionMock extends Connection implements \Testbench\Providers\IDatabaseProvider
 {
-
     private ?string $testbench_databaseName = null;
 
   /**

@@ -7,7 +7,6 @@ declare(strict_types=1);
  */
 class ComponentWithParameters extends \Nette\Application\UI\Control
 {
-
   /**
    * @param mixed $parameterOne
    * @param mixed $parameterTwo

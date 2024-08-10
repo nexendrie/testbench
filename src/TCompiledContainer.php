@@ -6,7 +6,6 @@ namespace Testbench;
 
 trait TCompiledContainer
 {
-
     protected function getContainer(): \Nette\DI\Container
     {
         return ContainerFactory::create(false);

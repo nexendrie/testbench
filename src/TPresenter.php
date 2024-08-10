@@ -12,7 +12,6 @@ use Tester\Dumper;
 
 trait TPresenter
 {
-
     private ?Presenter $testbench_presenter = null;
 
     private int $testbench_httpCode;

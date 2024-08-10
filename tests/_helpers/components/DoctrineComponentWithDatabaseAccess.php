@@ -9,7 +9,6 @@ use Tester\Assert;
  */
 class DoctrineComponentWithDatabaseAccess extends \Nette\Application\UI\Control
 {
-
     public function __construct(\Kdyby\Doctrine\EntityManager $entityManager)
     {
         parent::__construct();

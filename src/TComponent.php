@@ -8,7 +8,6 @@ use Nette\ComponentModel\IComponent;
 
 trait TComponent
 {
-
     private $testbench_presenterMock;
 
     protected function attachToPresenter(IComponent $component, string $name = null): void

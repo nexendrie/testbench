@@ -8,7 +8,6 @@ use Nette\Http;
 
 class HttpRequestMock extends \Nette\Http\Request
 {
-
   /**
    * HttpRequestMock constructor.
    * @param array|null $query

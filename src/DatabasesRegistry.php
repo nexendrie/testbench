@@ -6,7 +6,6 @@ namespace Testbench;
 
 class DatabasesRegistry
 {
-
     private string $dataFile;
 
     public function __construct()

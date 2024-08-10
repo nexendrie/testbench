@@ -6,7 +6,6 @@ use Nette\Application\UI;
 
 class PresenterPresenter extends Nette\Application\UI\Presenter
 {
-
     /** @persistent */
     public string $persistentParameter = '';
 

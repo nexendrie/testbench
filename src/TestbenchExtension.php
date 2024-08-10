@@ -6,7 +6,6 @@ namespace Testbench;
 
 class TestbenchExtension extends \Nette\DI\CompilerExtension
 {
-
   /**
    * @var array
    */

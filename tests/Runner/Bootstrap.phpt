@@ -13,7 +13,6 @@ require __DIR__ . '/../bootstrap.php';
  */
 class Bootstrap extends \Tester\TestCase
 {
-
     public function testSuperglobals()
     {
         Assert::same([], $_ENV);

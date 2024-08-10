@@ -6,7 +6,6 @@ namespace Testbench;
 
 trait TDoctrine
 {
-
     protected function getEntityManager(): \Kdyby\Doctrine\EntityManager
     {
         $container = ContainerFactory::create(false);

@@ -6,7 +6,6 @@ namespace Testbench;
 
 class FakeExtension extends \Nette\DI\CompilerExtension
 {
-
     public static bool $tested = false;
 
     public function loadConfiguration()
