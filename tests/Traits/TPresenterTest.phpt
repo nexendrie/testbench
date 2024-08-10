@@ -18,9 +18,16 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
     {
         $this->checkAction('Presenter:default');
 
+        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+            $errorType = E_WARNING;
+            $errorMessage = 'Undefined variable $doesnexist';
+        } else {
+            $errorType = E_NOTICE;
+            $errorMessage = 'Undefined variable: doesnexist';
+        }
         Assert::error(function () {
             $this->checkAction('Presenter:variabledoesntexist');
-        }, E_NOTICE, 'Undefined variable: doesnexist');
+        }, $errorType, $errorMessage);
     }
 
     public function testClassicRenderShort()

@@ -38,9 +38,16 @@ class TCompiledContainerTest extends \Tester\TestCase
     public function testRefreshContainerWithConfig()
     {
         $container = $this->getContainer();
+        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+            $errorType = E_WARNING;
+            $errorMessage = 'Undefined array key "test"';
+        } else {
+            $errorType = E_NOTICE;
+            $errorMessage = 'Undefined index: test';
+        }
         Assert::error(function () use ($container) {
             $container->parameters['test'];
-        }, 'E_NOTICE', 'Undefined index: test');
+        }, $errorType, $errorMessage);
 
         $refreshedContainer = $this->refreshContainer([
             'extensions' => ['test' => \Testbench\FakeExtension::class],

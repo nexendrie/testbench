@@ -15,7 +15,12 @@ trait TComponent
         if ($name === null) {
             if (!$name = $component->getName()) {
                 $name = $component->getReflection()->getShortName();
-                if (preg_match('~class@anonymous.*~', $name)) {
+                if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+                    $classNamePattern = '~Control@anonymous.*~';
+                } else {
+                    $classNamePattern = '~class@anonymous.*~';
+                }
+                if (preg_match($classNamePattern, $name)) {
                     $name = md5($name);
                 }
             }
