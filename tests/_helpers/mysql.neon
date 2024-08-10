@@ -13,7 +13,7 @@ doctrine:
 		host: 127.0.0.1
 		dbname: information_schema
 		driver: pdo_mysql
-		user: travis
+		user: root
 		password: ''
 
 

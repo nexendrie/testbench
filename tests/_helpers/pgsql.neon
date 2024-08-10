@@ -12,7 +12,7 @@ doctrine:
 	dbname: postgres
 	driver: pdo_pgsql
 	user: postgres
-	password: ''
+	password: test
 
 
 testbench:
