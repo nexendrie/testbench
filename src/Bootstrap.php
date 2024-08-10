@@ -17,10 +17,6 @@ class Bootstrap
    */
     public static function setup(string $tempDir, callable $callback = null)
     {
-        if (!class_exists(\Tester\Assert::class)) {
-            echo "Install Nette Tester using `composer update --dev`\n";
-            exit(1);
-        }
         self::$tempDir = $tempDir;
         self::$onBeforeContainerCreate = $callback;
 
