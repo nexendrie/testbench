@@ -1,7 +1,7 @@
 Testbench
 =========
 
-[![Total Downloads](https://poser.pugx.org/nexendrie/testbench/downloads)](https://packagist.org/packages/nexendrie/testbench)  [![Latest Stable Version](https://poser.pugx.org/nexendrie/testbench/v/stable)](https://packagist.org/packages/nexendrie/testbench) [![Build Status](https://travis-ci.com/nexendrie/testbench.svg?branch=master)](https://travis-ci.com/nexendrie/testbench)
+[![Total Downloads](https://poser.pugx.org/nexendrie/testbench/downloads)](https://packagist.org/packages/nexendrie/testbench)  [![Latest Stable Version](https://poser.pugx.org/nexendrie/testbench/v/stable)](https://packagist.org/packages/nexendrie/testbench) [![Tests](https://github.com/nexendrie/testbench/actions/workflows/tests.yaml/badge.svg)](https://github.com/nexendrie/testbench/actions/workflows/tests.yaml)
 
 Tested against PHP 7.4. Please read [this wiki](https://github.com/mrtnzlml/testbench/wiki).
 
@@ -10,7 +10,7 @@ Heavily inspired by these GitHub projects:
 
 And article(s):
 - [Bootstrap your integration testing database](https://jiripudil.cz/blog/bootstrap-your-integration-testing-database) (Jiří Pudil)
-- [Testování presenterů v Nette](http://zlml.cz/testovani-presenteru-v-nette) (me)
+- [Testování presenterů v Nette](https://web.archive.org/web/20170113231146/https://zlml.cz/testovani-presenteru-v-nette) (Martin Zlámal)
 
 Simple test bench for Nette Framework projects
 ----------------------------------------------
@@ -23,7 +23,7 @@ Installation
 ------------
 
 ```bash
-$ composer require nexendrie/testbench
+$ composer require --dev nexendrie/testbench
 ```
 
 Testbench itself doesn't need database. But if you want to use `Testbench\TDoctrine` or `Testbench\TNetteDatabase` trait you have to set up database for the first connection. You should use standard database configuration - nothing special. You can see example in `tests/tests.local.neon.dist` file. Empty database is good enough for Testbench. Supported databases are:
@@ -99,7 +99,7 @@ class HomepagePresenterTest extends \Tester\TestCase
 
 You can easily write cover with tests UI\Controls, restricted areas, forms, signals, redirects, ...
 
-Please read [this article](http://zlml.cz/jednoduche-testovani-pro-uplne-kazdeho).
+Please read [this article](https://web.archive.org/web/20170108092913/http://zlml.cz/jednoduche-testovani-pro-uplne-kazdeho).
 
 Give it a shot!
 ---------------
