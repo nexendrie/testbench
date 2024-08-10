@@ -9,10 +9,8 @@ services:
   - postgresql
 
 env:
-  - DB=mysql RUNLEVEL=0
-  - DB=mysql RUNLEVEL=10
-  - DB=pgsql RUNLEVEL=0
-  - DB=pgsql RUNLEVEL=10
+  - DB=mysql
+  - DB=pgsql
 
 matrix:
     allow_failures:
