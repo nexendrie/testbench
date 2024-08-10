@@ -1,5 +1,5 @@
 database:
-	dsn: 'pgsql:host=127.0.0.1;dbname=postgres'
+	dsn: 'pgsql:host=postgres;dbname=postgres'
 	user: postgres
 	password: ''
 	options: [PDO::MYSQL_ATTR_COMPRESS = true]
@@ -8,7 +8,7 @@ database:
 doctrine:
 	metadata:
 		App: %appDir%
-	host: 127.0.0.1
+	host: postgres
 	dbname: postgres
 	driver: pdo_pgsql
 	user: postgres
