@@ -71,5 +71,8 @@
   },
   "conflict": {
     "doctrine/orm": ">=2.7.3"
+  },
+  "config": {
+    "allow-plugins": false
   }
 }
