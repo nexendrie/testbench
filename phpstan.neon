@@ -5,15 +5,14 @@ parameters:
     paths:
         - src
         - tests
-    excludes_analyse:
+    excludePaths:
         - %rootDir%/../../../tests/_temp/*
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
     treatPhpDocTypesAsCertain: false
     earlyTerminatingMethodCalls:
         Tester\Assert:
             - fail
     ignoreErrors:
+        -
+            identifier: missingType.iterableValue
         - '#Method Testbench\\CustomPresenterTestCase::getException\(\) should return Exception but returns Exception\|nul#'
-        - '#Instanceof between \*NEVER\* and Traversable will always evaluate to false#'
-        - '#Result of \|\| is always true#'
+        - '#Ternary operator condition is always true#'
