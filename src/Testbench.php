@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-class Testbench
-{
-    public const QUICK = 0;
-    public const FINE = 5;
-    public const SLOW = 10;
-}
-
 if (class_exists(\Kdyby\Doctrine\Connection::class)) { //BC:
     class_alias(\Testbench\Mocks\ApplicationRequestMock::class, 'Testbench\ApplicationRequestMock');
     class_alias(\Testbench\Mocks\DoctrineConnectionMock::class, 'Testbench\ConnectionMock');
