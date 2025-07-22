@@ -46,10 +46,7 @@
       "Testbench\\": [
         "src/"
       ]
-    },
-    "files": [
-      "src/Testbench.php"
-    ]
+    }
   },
   "autoload-dev": {
     "classmap": [

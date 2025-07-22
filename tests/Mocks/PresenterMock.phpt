@@ -15,7 +15,6 @@ $latte->addProvider('uiControl', new \Testbench\Mocks\PresenterMock());
 
 /** @var \Testbench\Mocks\PresenterMock $mock */
 $mock = $latte->getProviders()['uiControl'];
-Assert::type(\Testbench\Mocks\PresenterMock::class, new \Testbench\PresenterMock()); //BC
 
 Assert::false($mock->isAjax());
 

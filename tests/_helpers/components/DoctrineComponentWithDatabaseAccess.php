@@ -15,7 +15,7 @@ class DoctrineComponentWithDatabaseAccess extends \Nette\Application\UI\Control
 
         /** @var \Testbench\Mocks\DoctrineConnectionMock $connection */
         $connection = $entityManager->getConnection();
-        Assert::type(\Testbench\Mocks\ConnectionMock::class, $connection); //not a service (listeners will not work)!
+        Assert::type(\Testbench\Mocks\DoctrineConnectionMock::class, $connection); //not a service (listeners will not work)!
         Assert::false($connection->isConnected());
         Assert::count(1, $connection->onConnect);
         if ($connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySqlPlatform) {
