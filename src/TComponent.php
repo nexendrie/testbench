@@ -8,13 +8,13 @@ use Nette\ComponentModel\IComponent;
 
 trait TComponent
 {
-    private $testbench_presenterMock;
+    private ?\Testbench\Mocks\PresenterMock $testbench_presenterMock = null;
 
     protected function attachToPresenter(IComponent $component, string $name = null): void
     {
         if ($name === null) {
             if (!$name = $component->getName()) {
-                $name = $component->getReflection()->getShortName();
+                $name = (new \ReflectionClass($component))->getShortName();
                 if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
                     $classNamePattern = '~Control@anonymous.*~';
                 } else {
@@ -40,7 +40,7 @@ trait TComponent
         $this->testbench_presenterMock->run(new \Nette\Application\Request('Foo'));
     }
 
-    protected function checkRenderOutput(IComponent $control, string $expected, array $renderParameters = [])
+    protected function checkRenderOutput(IComponent $control, string $expected, array $renderParameters = []): void
     {
         if (!$control->getParent()) {
             $this->attachToPresenter($control);

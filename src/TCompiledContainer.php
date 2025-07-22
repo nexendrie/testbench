@@ -11,12 +11,12 @@ trait TCompiledContainer
         return ContainerFactory::create(false);
     }
 
-    protected function getService($class): ?object
+    protected function getService(string $class): ?object
     {
         return $this->getContainer()->getByType($class);
     }
 
-    protected function refreshContainer($config = []): \Nette\DI\Container
+    protected function refreshContainer(array $config = []): \Nette\DI\Container
     {
         return ContainerFactory::create(true, $config);
     }
