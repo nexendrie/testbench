@@ -14,19 +14,18 @@ require __DIR__ . '/../bootstrap.php';
  */
 class Runner extends \Tester\TestCase
 {
-    private $tempDir;
+    private string $tempDir;
 
-    /** @var \Testbench\Runner */
-    private $runner;
+    private \Testbench\Runner $runner;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tempDir = dirname(__DIR__) . '/_temp';
         $this->runner = new \Testbench\Runner();
         \Tester\Environment::lock('lock_temp_dir', $this->tempDir); //needed for testConfigExists
     }
 
-    public function testWithoutArguments()
+    public function testWithoutArguments(): void
     {
         Assert::same([
             '-p', 'php',
@@ -36,7 +35,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments([], $this->tempDir));
     }
 
-    public function testWithoutArgumentsEnv()
+    public function testWithoutArgumentsEnv(): void
     {
         Assert::same([
             'ENV=value', //linux environment variable (always first)
@@ -47,7 +46,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments(['ENV=value'], $this->tempDir));
     }
 
-    public function testWatch()
+    public function testWatch(): void
     {
         Assert::same([
             '-w', 'tests/',
@@ -59,7 +58,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments(['-w', 'tests/', '-w', 'src/'], $this->tempDir));
     }
 
-    public function testNativeArguments()
+    public function testNativeArguments(): void
     {
         Assert::same([
             '-j', '20',
@@ -70,7 +69,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments(['-j', '20'], $this->tempDir));
     }
 
-    public function testInterpreter()
+    public function testInterpreter(): void
     {
         Assert::same([
             '-p', 'php-cgi',
@@ -80,7 +79,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments(['-p', 'php-cgi'], $this->tempDir));
     }
 
-    public function testConfigExists()
+    public function testConfigExists(): void
     {
         $os = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'win' : 'unix';
         FileSystem::write($configFile = $this->tempDir . "/php-$os.ini", '');
@@ -93,7 +92,7 @@ class Runner extends \Tester\TestCase
         FileSystem::delete($configFile);
     }
 
-    public function testTemp()
+    public function testTemp(): void
     {
         Assert::same([
             '-p', 'php',
@@ -103,7 +102,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments(['--temp', $this->tempDir . '/_temp2'], $this->tempDir));
     }
 
-    public function testPath()
+    public function testPath(): void
     {
         Assert::same([
             '-p', 'php',
@@ -128,7 +127,7 @@ class Runner extends \Tester\TestCase
         ], $this->runner->prepareArguments(['-s', 'path/to/tests', '-p', 'php-cgi'], $this->tempDir));
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         Assert::same([
             'ENV=value', //linux environment variable (always first)

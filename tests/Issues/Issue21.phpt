@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Issues;
 
+use Nette\Application\Request;
+use Nette\Application\UI\Presenter;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
@@ -17,12 +19,15 @@ class Issue21 extends \Tester\TestCase
     use \Testbench\TPresenter;
     use \Testbench\TCompiledContainer;
 
-    public function testGetParametersPersistence()
+    public function testGetParametersPersistence(): void
     {
         $this->checkAction('Presenter:default', ['getparam' => 'getparamvalue']);
 
+        /** @var Presenter $presenter */
         $presenter = $this->getPresenter();
+        /** @var Request $appRequest */
         $appRequest = $presenter->getRequest();
+        /** @var \Nette\Http\Request $httpRequest */
         $httpRequest = $this->getContainer()->getService('httpRequest');
 
         Assert::same('getparamvalue', $appRequest->getParameter('getparam'));
@@ -30,11 +35,13 @@ class Issue21 extends \Tester\TestCase
         Assert::same('getparamvalue', $httpRequest->getQuery('getparam'));
     }
 
-    public function testPostParametersPersistence()
+    public function testPostParametersPersistence(): void
     {
         $this->checkSignal('Presenter:default', 'signal', ['id' => 1], ['postparam' => 'postparamvalue']);
 
+        /** @var Presenter $presenter */
         $presenter = $this->getPresenter();
+        /** @var Request $appRequest */
         $appRequest = $presenter->getRequest();
         $httpRequest = $this->getContainer()->getService('httpRequest');
 
@@ -46,7 +53,7 @@ class Issue21 extends \Tester\TestCase
         Assert::same(1, (int) $httpRequest->getQuery('id'));
     }
 
-    public function testRedirectPersistentParameter()
+    public function testRedirectPersistentParameter(): void
     {
         $this->checkRedirect('Presenter:redirectRss', '/x/y/rss', ['persistentParameter' => 'Url-En.coded Value MixedCasě?!']);
         $this->checkRedirect('Presenter:redirect', '/x/y', ['persistentParameter' => 'Url-En.coded Value MixedCasě?!']);

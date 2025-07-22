@@ -13,22 +13,22 @@ class PresenterModuleTest extends \Tester\TestCase
 {
     use \Testbench\TPresenter;
 
-    public function testClassicRender1()
+    public function testClassicRender1(): void
     {
         $this->checkAction('Module:Presenter:');
     }
 
-    public function testClassicRender2()
+    public function testClassicRender2(): void
     {
         $this->checkAction('Module:Presenter:default');
     }
 
-    public function testClassicRender3()
+    public function testClassicRender3(): void
     {
         $this->checkAction(':Module:Presenter:default');
     }
 
-    public function testMultipleSame()
+    public function testMultipleSame(): void
     {
         $this->checkAction('Module:Presenter:');
         $this->checkAction('Module:Presenter:default');

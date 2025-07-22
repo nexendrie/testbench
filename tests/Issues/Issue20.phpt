@@ -28,7 +28,7 @@ final class Issue20 extends \Tester\TestCase
 {
     use \Testbench\TPresenter;
 
-    public function testRenderDefault()
+    public function testRenderDefault(): void
     {
         $this->checkAction('Presenter:default');
     }

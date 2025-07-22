@@ -13,7 +13,7 @@ require __DIR__ . '/../bootstrap.php';
  */
 class Bootstrap extends \Tester\TestCase
 {
-    public function testSuperglobals()
+    public function testSuperglobals(): void
     {
         Assert::same([], $_ENV);
         Assert::same([], $_GET);
@@ -21,17 +21,17 @@ class Bootstrap extends \Tester\TestCase
         Assert::same([], $_FILES);
     }
 
-    public function testTimezone()
+    public function testTimezone(): void
     {
         Assert::same('Europe/Prague', date_default_timezone_get());
     }
 
-    public function testBootstrapEnvVariable()
+    public function testBootstrapEnvVariable(): void
     {
         Assert::same(realpath(__DIR__ . '/../bootstrap.php'), getenv('BOOTSTRAP'));
     }
 
-    public function testServerSuperglobalVariable()
+    public function testServerSuperglobalVariable(): void
     {
         Assert::same('Awesome Browser', $_SERVER['HTTP_USER_AGENT']);
         Assert::same('11.22.33.44', $_SERVER['REMOTE_ADDR']);

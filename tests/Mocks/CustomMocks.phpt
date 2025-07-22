@@ -15,7 +15,7 @@ class CustomMocks extends \Tester\TestCase
 {
     use \Testbench\TCompiledContainer;
 
-    public function testCustomMocks()
+    public function testCustomMocks(): void
     {
         Assert::type(\Testbench\Mocks\PresenterMock::class, $this->getService(\Testbench\Mocks\PresenterMock::class));
         Assert::type(\Testbench\CustomPresenterMock::class, $this->getService(\Testbench\Mocks\PresenterMock::class));

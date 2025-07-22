@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Traits;
 
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Testbench\Mocks\DoctrineConnectionMock;
 use Tester\Assert;
 
 require getenv('BOOTSTRAP');
@@ -17,22 +18,23 @@ class TDoctrineTest extends \Tester\TestCase
     use \Testbench\TCompiledContainer;
     use \Testbench\TDoctrine;
 
-    public function testLazyConnection()
+    public function testLazyConnection(): void
     {
         $container = $this->getContainer();
+        /** @var DoctrineConnectionMock $db */
         $db = $container->getByType(\Doctrine\DBAL\Connection::class);
         $db->onConnect[] = function () {
-            Assert::fail(\Testbench\ConnectionMock::class . '::$onConnect event should not be called if you do NOT need database');
+            Assert::fail(\Testbench\Mocks\DoctrineConnectionMock::class . '::$onConnect event should not be called if you do NOT need database');
         };
         \Tester\Environment::$checkAssertions = false;
     }
 
-    public function testEntityManager()
+    public function testEntityManager(): void
     {
         Assert::type(\Doctrine\ORM\EntityManagerInterface::class, $this->getEntityManager());
     }
 
-    public function testDatabaseCreation()
+    public function testDatabaseCreation(): void
     {
         /** @var \Testbench\Mocks\DoctrineConnectionMock $connection */
         $connection = $this->getEntityManager()->getConnection();
@@ -44,7 +46,7 @@ class TDoctrineTest extends \Tester\TestCase
         }
     }
 
-    public function testDatabaseSqls()
+    public function testDatabaseSqls(): void
     {
         /** @var \Testbench\Mocks\DoctrineConnectionMock $connection */
         $connection = $this->getEntityManager()->getConnection();
@@ -71,7 +73,7 @@ class TDoctrineTest extends \Tester\TestCase
         }
     }
 
-    public function testDatabaseConnectionReplacementInApp()
+    public function testDatabaseConnectionReplacementInApp(): void
     {
         /** @var \Kdyby\Doctrine\EntityManager $em */
         $em = $this->getService(\Kdyby\Doctrine\EntityManager::class);

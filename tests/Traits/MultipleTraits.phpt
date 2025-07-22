@@ -17,7 +17,7 @@ class MultipleTraits extends \Tester\TestCase
     use \Testbench\TNetteDatabase;
     use \Testbench\TPresenter;
 
-    public function testShutUp()
+    public function testShutUp(): void
     {
         \Tester\Environment::$checkAssertions = false;
     }

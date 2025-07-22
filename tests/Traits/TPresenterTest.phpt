@@ -14,7 +14,7 @@ require getenv('BOOTSTRAP');
  */
 class TPresenterTest extends \Testbench\CustomPresenterTestCase
 {
-    public function testClassicRender()
+    public function testClassicRender(): void
     {
         $this->checkAction('Presenter:default');
 
@@ -30,22 +30,22 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         }, $errorType, $errorMessage);
     }
 
-    public function testClassicRenderShort()
+    public function testClassicRenderShort(): void
     {
         $this->checkAction('Presenter:');
     }
 
-    public function testClassicRenderFqn()
+    public function testClassicRenderFqn(): void
     {
         $this->checkAction(':Presenter:default');
     }
 
-    public function testRenderBrokenLink()
+    public function testRenderBrokenLink(): void
     {
         $this->checkAction('Presenter:brokenLink'); //FIXME: should fail (?)
     }
 
-    public function test404Render()
+    public function test404Render(): void
     {
         Assert::exception(function () {
             $this->checkAction('Presenter:404');
@@ -53,7 +53,7 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         Assert::same(404, $this->getReturnCode());
     }
 
-    public function test500Render()
+    public function test500Render(): void
     {
         Assert::exception(function () {
             $this->checkAction('Presenter:fail');
@@ -61,7 +61,7 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         Assert::same(500, $this->getReturnCode());
     }
 
-    public function testRenderException()
+    public function testRenderException(): void
     {
         Assert::exception(function () {
             $this->checkAction('Presenter:exception');
@@ -69,19 +69,19 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         Assert::type(\Latte\CompileException::class, $this->getException());
     }
 
-    public function testRedirect()
+    public function testRedirect(): void
     {
         $this->checkRedirect('Presenter:redirect', '/x/y');
     }
 
-    public function testRedirectRss()
+    public function testRedirectRss(): void
     {
         $this->checkRedirect('Presenter:redirectRss', '/x/y/rss');
         $this->checkRedirect('Presenter:redirectRss', '/.*');
         $this->checkRedirect('Presenter:redirectRss', '/(x|y)/(x|y)/.?s{2}');
     }
 
-    public function testRedirectRssFailedUrl()
+    public function testRedirectRssFailedUrl(): void
     {
         $path = Dumper::color('yellow') . Dumper::toLine('/x/y/rs') . Dumper::color('white');
         $url = Dumper::color('yellow') . Dumper::toLine('http://test.bench/x/y/rss') . Dumper::color('white');
@@ -92,7 +92,7 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         }, \Tester\AssertException::class, str_repeat(' ', 4) . "path $path doesn't match\n$url\nafter redirect");
     }
 
-    public function testJsonOutput()
+    public function testJsonOutput(): void
     {
         $this->checkJsonScheme('Presenter:json', [
             'string' => [
@@ -104,38 +104,38 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         }, \Tester\AssertException::class);
     }
 
-    public function testRss()
+    public function testRss(): void
     {
         $this->checkRss('Presenter:rss');
     }
 
-    public function testSitemap()
+    public function testSitemap(): void
     {
         $this->checkSitemap('Presenter:sitemap');
     }
 
-    public function testUserLogIn()
+    public function testUserLogIn(): void
     {
         $user = $this->logIn();
         Assert::true($user->isLoggedIn());
     }
 
-    public function testUserLogInWithId()
+    public function testUserLogInWithId(): void
     {
         $user = $this->logIn(1);
         Assert::true($user->isLoggedIn());
         Assert::same(1, $user->identity->id);
     }
 
-    public function testUserLogInWithIdRole()
+    public function testUserLogInWithIdRole(): void
     {
-        $user = $this->logIn(1, 'admin');
+        $user = $this->logIn(1, ['admin']);
         Assert::true($user->isLoggedIn());
         Assert::same(1, $user->identity->id);
         Assert::true($user->isInRole('admin'));
     }
 
-    public function testUserLogInWithIdRoles()
+    public function testUserLogInWithIdRoles(): void
     {
         $user = $this->logIn(1, ['test1', 'test2']);
         Assert::true($user->isLoggedIn());
@@ -145,7 +145,7 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         Assert::false($user->isInRole('admin'));
     }
 
-    public function testUserLogInWithIdentity()
+    public function testUserLogInWithIdentity(): void
     {
         $user = $this->logIn($identity = new \Nette\Security\Identity(123, ['Role_1', 'Role_2']), ['Role_3']);
 
@@ -158,20 +158,20 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         Assert::same(['Role_1', 'Role_2'], $user->getRoles());
     }
 
-    public function testUserLogOut()
+    public function testUserLogOut(): void
     {
         $user = $this->logOut();
         Assert::false($user->isLoggedIn());
     }
 
-    public function testPresenterInstance()
+    public function testPresenterInstance(): void
     {
         Assert::null($this->getPresenter()); //presenter is not open yet
         $this->checkAction('Presenter:default');
         Assert::type(\Nette\Application\UI\Presenter::class, $this->getPresenter()); //presenter is not open yet
     }
 
-    public function testForm()
+    public function testForm(): void
     {
         $this->checkForm('Presenter:default', 'form1', [
             'test' => 'test',
@@ -195,21 +195,21 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         }, \Tester\AssertException::class);
     }
 
-    public function testFormDifferentDestination()
+    public function testFormDifferentDestination(): void
     {
         $this->checkForm('Presenter:default', 'form2', [
             'test' => 'test',
         ], '/x/y/json');
     }
 
-    public function testFormWithoutRedirect()
+    public function testFormWithoutRedirect(): void
     {
         $this->checkForm('Presenter:default', 'form3', [
             'test' => 'test',
         ], false); //do not check redirect
     }
 
-    public function testAjaxForm()
+    public function testAjaxForm(): void
     {
         $this->checkForm('Presenter:default', 'ajaxForm', [
             'test' => 'test',
@@ -224,26 +224,26 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         ], '/x/y/json');
     }
 
-    public function testCsrfForm()
+    public function testCsrfForm(): void
     {
         $this->checkForm('Presenter:default', 'csrfForm', [
             'test' => 'test',
         ], '/x/y');
     }
 
-    public function testSignal()
+    public function testSignal(): void
     {
         $this->checkSignal('Presenter:default', 'signal');
     }
 
-    public function testAjaxSignal()
+    public function testAjaxSignal(): void
     {
         /** @var \Nette\Application\Responses\JsonResponse $response */
         $response = $this->checkAjaxSignal('Presenter:default', 'ajaxSignal');
         Assert::same(['ok'], $response->getPayload());
     }
 
-    public function testFormEnhanced()
+    public function testFormEnhanced(): void
     {
         $this->checkForm('Presenter:default', 'form1', [
             'a' => 'b',
@@ -267,7 +267,7 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
         }, \Tester\AssertException::class, "field 'test' should be defined as required, but it's not");
     }
 
-    public function testUserLoggedIn()
+    public function testUserLoggedIn(): void
     {
         Assert::false($this->isUserLoggedIn());
         $this->logIn();

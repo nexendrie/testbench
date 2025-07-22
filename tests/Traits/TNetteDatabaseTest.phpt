@@ -17,7 +17,7 @@ class TNetteDatabaseTest extends \Tester\TestCase
     use \Testbench\TCompiledContainer;
     use \Testbench\TNetteDatabase;
 
-    public function testLazyConnection()
+    public function testLazyConnection(): void
     {
         $container = $this->getContainer();
         $db = $container->getByType(\Nette\Database\Connection::class);
@@ -27,19 +27,19 @@ class TNetteDatabaseTest extends \Tester\TestCase
         \Tester\Environment::$checkAssertions = false;
     }
 
-    public function testContext()
+    public function testContext(): void
     {
         Assert::type(\Nette\Database\Context::class, $this->getContext());
     }
 
-    public function testDatabaseCreation()
+    public function testDatabaseCreation(): void
     {
         /** @var \Nette\Database\Connection $connection */
         $connection = $this->getContext()->getConnection();
         $returnActualDatabaseName = function () use ($connection) {
  //getSupplementalDriver is performing first connect (behaves lazy)
             preg_match('~.*dbname=([a-z0-9_-]+)~i', $connection->getDsn(), $matches);
-            return $matches[1];
+            return $matches[1] ?? '';
         };
         if ($connection->getSupplementalDriver() instanceof MySqlDriver) {
             Assert::match('information_schema', $returnActualDatabaseName());
@@ -49,7 +49,7 @@ class TNetteDatabaseTest extends \Tester\TestCase
         }
     }
 
-    public function testDatabaseSqls()
+    public function testDatabaseSqls(): void
     {
         /** @var \Nette\Database\Connection $connection */
         $connection = $this->getContext()->getConnection();
@@ -63,13 +63,13 @@ class TNetteDatabaseTest extends \Tester\TestCase
         ], $result);
 
         if ($connection->getSupplementalDriver() instanceof MySqlDriver) {
-            Assert::match('information_schema', $matches[1]);
+            Assert::match('information_schema', $matches[1] ?? '');
         } else {
-            Assert::same('_testbench_' . getenv(\Tester\Environment::THREAD), $matches[1]);
+            Assert::same('_testbench_' . getenv(\Tester\Environment::THREAD), $matches[1] ?? '');
         }
     }
 
-    public function testDatabaseConnectionReplacementInApp()
+    public function testDatabaseConnectionReplacementInApp(): void
     {
         /** @var \Nette\Database\Context $context */
         $context = $this->getService(\Nette\Database\Context::class);
@@ -77,11 +77,12 @@ class TNetteDatabaseTest extends \Tester\TestCase
         //app is not using onConnect from Testbench but it has to connect to the mock database
     }
 
-    public function testConnectionMockSetup()
+    public function testConnectionMockSetup(): void
     {
         /** @var \Testbench\Mocks\NetteDatabaseConnectionMock $connection */
         $connection = $this->getService(\Testbench\Mocks\NetteDatabaseConnectionMock::class);
 
+        /** @var \Nette\Reflection\ClassType $dbr */
         $dbr = (new \Nette\Reflection\ClassType($connection))->getParentClass(); //:-(
         $params = $dbr->getProperty('params');
         $params->setAccessible(true);

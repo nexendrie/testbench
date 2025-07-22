@@ -15,18 +15,18 @@ class TCompiledContainerTest extends \Tester\TestCase
 {
     use \Testbench\TCompiledContainer;
 
-    public function testGetContainer()
+    public function testGetContainer(): void
     {
         Assert::type(\Nette\DI\Container::class, $container = $this->getContainer());
         Assert::same($container, $this->getContainer());
     }
 
-    public function testGetService()
+    public function testGetService(): void
     {
         Assert::type(\Nette\Application\Application::class, $this->getService(\Nette\Application\Application::class));
     }
 
-    public function testRefreshContainer()
+    public function testRefreshContainer(): void
     {
         Assert::type(\Nette\DI\Container::class, $container = $this->getContainer());
         Assert::same($container, $this->getContainer());
@@ -35,7 +35,7 @@ class TCompiledContainerTest extends \Tester\TestCase
         Assert::notSame($container, $refreshedContainer);
     }
 
-    public function testRefreshContainerWithConfig()
+    public function testRefreshContainerWithConfig(): void
     {
         $container = $this->getContainer();
         if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
@@ -46,7 +46,7 @@ class TCompiledContainerTest extends \Tester\TestCase
             $errorMessage = 'Undefined index: test';
         }
         Assert::error(function () use ($container) {
-            $container->parameters['test'];
+            $value = $container->parameters['test'];
         }, $errorType, $errorMessage);
 
         $refreshedContainer = $this->refreshContainer([

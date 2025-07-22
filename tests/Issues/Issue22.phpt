@@ -15,11 +15,11 @@ class Issue22 extends \Tester\TestCase
 {
     use \Testbench\TComponent;
 
-    public function testAnonymousComponentRender()
+    public function testAnonymousComponentRender(): void
     {
         $control = new class extends \Nette\Application\UI\Control
         {
-            public function render()
+            public function render(): void
             {
                 echo 'ok';
             }

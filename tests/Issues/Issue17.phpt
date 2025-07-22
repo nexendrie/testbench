@@ -19,7 +19,7 @@ class Issue17 extends \Tester\TestCase
     /**
      * @dataProvider commentFormParameters
      */
-    public function testCommentForm($params, $post, $shouldFail = true)
+    public function testCommentForm(array $params, array $post, bool $shouldFail = true): void
     {
         if ($shouldFail) {
             Assert::exception(function () use ($params, $post) {
@@ -39,22 +39,22 @@ class Issue17 extends \Tester\TestCase
     /**
      * @dataProvider commentFormParametersBetter
      */
-    public function testCommentFormBetter($post, $shouldFail = true)
+    public function testCommentFormBetter(array $post, bool $shouldFail = true): void
     {
         if ($shouldFail) {
-            Assert::exception(function () use ($post, $shouldFail) {
-                $this->checkForm('Presenter:default', 'form1', $post, $shouldFail ? false : '/x/y');
+            Assert::exception(function () use ($post) {
+                $this->checkForm('Presenter:default', 'form1', $post, false);
             }, 'Tester\AssertException', "field 'test' returned this error(s):\n  - This field is required.");
             $errors = $this->getPresenter()->getComponent('form1')->getErrors();
             Assert::same(['This field is required.'], $errors);
         } else {
-            $this->checkForm('Presenter:default', 'form1', $post, $shouldFail ? false : '/x/y');
+            $this->checkForm('Presenter:default', 'form1', $post, '/x/y');
             $errors = $this->getPresenter()->getComponent('form1')->getErrors();
             Assert::same([], $errors);
         }
     }
 
-    public function commentFormParameters()
+    public function commentFormParameters(): array
     {
         return [
             [['do' => 'form1-submit'], ['test' => null], true],
@@ -62,7 +62,7 @@ class Issue17 extends \Tester\TestCase
         ];
     }
 
-    public function commentFormParametersBetter()
+    public function commentFormParametersBetter(): array
     {
         return [
             [['test' => null], true],
