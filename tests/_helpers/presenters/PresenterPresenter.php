@@ -25,7 +25,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
 
     public function renderFail(): void
     {
-        $this->error(null, \Nette\Http\IResponse::S500_INTERNAL_SERVER_ERROR);
+        $this->error('', \Nette\Http\IResponse::S500_INTERNAL_SERVER_ERROR);
     }
 
     public function renderException(): void
@@ -75,7 +75,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
             if (!empty($values->error) && $values->error !== '###') { //scaffold
                 $form->addError('Intended error: ' . $values->error);
             }
-            $this->flashMessage(json_encode($values));
+            $this->flashMessage((string) json_encode($values));
             $this->redirect('this');
         };
         return $form;
@@ -86,7 +86,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
         $form = new UI\Form();
         $form->addText('test');
         $form->onSuccess[] = function ($_, $values): void {
-            $this->flashMessage(json_encode($values));
+            $this->flashMessage((string) json_encode($values));
             $this->redirect('json');
         };
         return $form;
@@ -97,7 +97,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
         $form = new \Nette\Application\UI\Form();
         $form->addText('test');
         $form->onSuccess[] = function ($_, $values): void {
-            $this->flashMessage(json_encode($values));
+            $this->flashMessage((string) json_encode($values));
         };
         return $form;
     }
@@ -107,7 +107,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
         $form = new UI\Form();
         $form->addText('test'); //should be required, but it's not
         $form->onSuccess[] = function ($_, $values): void {
-            $this->flashMessage(json_encode($values));
+            $this->flashMessage((string) json_encode($values));
             $this->redirect('this');
         };
         return $form;
@@ -119,7 +119,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
         $form->addCheckbox('hello');
         $form->addText('test');
         $form->onSuccess[] = function ($_, $values): void {
-            $this->flashMessage(json_encode($values));
+            $this->flashMessage((string) json_encode($values));
             $this->redirect('this');
         };
         return $form;
@@ -130,7 +130,7 @@ class PresenterPresenter extends Nette\Application\UI\Presenter
         $form = new UI\Form();
         $form->addText('test');
         $form->onSuccess[] = function ($_, $values): void {
-            $this->flashMessage(json_encode($values));
+            $this->flashMessage((string) json_encode($values));
             if ($this->isAjax()) {
                 $this->redrawControl();
             } else {

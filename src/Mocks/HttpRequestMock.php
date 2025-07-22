@@ -6,7 +6,7 @@ namespace Testbench\Mocks;
 
 use Nette\Http;
 
-class HttpRequestMock extends \Nette\Http\Request
+class HttpRequestMock extends Http\Request
 {
   /**
    * HttpRequestMock constructor.
@@ -27,7 +27,7 @@ class HttpRequestMock extends \Nette\Http\Request
         $files = [],
         $cookies = [],
         $headers = [],
-        $method = PHP_SAPI,
+        $method = Http\Request::GET,
         $remoteAddress = '127.0.0.1',
         $remoteHost = '127.0.0.1',
         $rawBodyCallback = null
