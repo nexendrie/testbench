@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Testbench\Components;
+
 /**
  * @property \Nette\Bridges\ApplicationLatte\Template $template
  */

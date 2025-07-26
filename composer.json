@@ -49,8 +49,19 @@
     }
   },
   "autoload-dev": {
-    "classmap": [
-      "tests/"
+    "psr-4": {
+      "Tests\\": [
+        "tests/"
+      ],
+      "Testbench\\": [
+        "tests/_helpers"
+      ],
+      "ModuleModule\\": [
+        "tests/_helpers/ModuleModule/presenters"
+      ]
+    },
+    "files": [
+      "tests/_helpers/presenters/PresenterPresenter.php"
     ]
   },
   "bin": [

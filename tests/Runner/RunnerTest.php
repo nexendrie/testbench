@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Runner;
+namespace Tests\Runner;
 
 use Nette\Utils\FileSystem;
 use Tester\Assert;

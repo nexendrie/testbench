@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Traits;
 
 use Tester\Assert;
+use Testbench\Components\Component;
 
 require getenv('BOOTSTRAP');
 
@@ -17,7 +18,7 @@ class TComponentTest extends \Tester\TestCase
 
     public function testAttachToPresenter(): void
     {
-        $control = new \Component();
+        $control = new Component();
         Assert::exception(function () use ($control) {
             $control->lookup(\Nette\Application\IPresenter::class);
         }, \Nette\InvalidStateException::class, "Component '' is not attached to '" . \Nette\Application\IPresenter::class . "'.");
@@ -27,7 +28,7 @@ class TComponentTest extends \Tester\TestCase
 
     public function testRender(): void
     {
-        $control = new \Component();
+        $control = new Component();
         $this->checkRenderOutput($control, '<strong>OK</strong>');
         $this->checkRenderOutput($control, __DIR__ . '/Component.expected');
     }
@@ -40,7 +41,7 @@ class TComponentTest extends \Tester\TestCase
         $latte = new \Latte\Engine();
         $latte->setLoader(new \Latte\Loaders\StringLoader());
         \Nette\Bridges\ApplicationLatte\UIMacros::install($latte->getCompiler());
-        $latte->addProvider('uiControl', new \ComponentWithParameters());
+        $latte->addProvider('uiControl', new \Testbench\Components\ComponentWithParameters());
 
         Assert::same('["var1"]', $latte->renderToString('{control cwp var1}'));
         Assert::same('["var1",1,2]', $latte->renderToString('{control cwp var1, 1, 2}'));
@@ -49,21 +50,21 @@ class TComponentTest extends \Tester\TestCase
 
     public function testRenderWithParameters(): void
     {
-        $control = new \ComponentWithParameters();
+        $control = new \Testbench\Components\ComponentWithParameters();
         $this->checkRenderOutput($control, '[1]', [1]);
         $this->checkRenderOutput($control, '[1,"2"]', [1, '2']);
     }
 
     public function testRenderWithExplicitAttach(): void
     {
-        $this->attachToPresenter($control = new \Component());
+        $this->attachToPresenter($control = new Component());
         $this->checkRenderOutput($control, '<strong>OK</strong>');
         $this->checkRenderOutput($control, __DIR__ . '/Component.expected');
     }
 
     public function testMultipleAttaches(): void
     {
-        $control = new \Component();
+        $control = new Component();
         $this->attachToPresenter($control);
         Assert::type(\Testbench\CustomPresenterMock::class, $control->lookup(\Nette\Application\IPresenter::class));
         $this->attachToPresenter($control);
@@ -73,9 +74,9 @@ class TComponentTest extends \Tester\TestCase
 
     public function testMultipleAttachesDifferentComponents(): void
     {
-        $this->attachToPresenter($control = new \Component(), 'name_1');
+        $this->attachToPresenter($control = new Component(), 'name_1');
         Assert::type(\Testbench\CustomPresenterMock::class, $control->lookup(\Nette\Application\IPresenter::class));
-        $this->attachToPresenter($control = new \Component(), 'name_2');
+        $this->attachToPresenter($control = new Component(), 'name_2');
         Assert::type(\Testbench\CustomPresenterMock::class, $control->lookup(\Nette\Application\IPresenter::class));
         \Tester\Environment::$checkAssertions = false;
     }

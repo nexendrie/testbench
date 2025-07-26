@@ -77,7 +77,7 @@ class TDoctrineTest extends \Tester\TestCase
     {
         /** @var \Kdyby\Doctrine\EntityManager $em */
         $em = $this->getService(\Kdyby\Doctrine\EntityManager::class);
-        new \DoctrineComponentWithDatabaseAccess($em); //tests inside
+        new \Testbench\Components\DoctrineComponentWithDatabaseAccess($em); //tests inside
         //app is not using onConnect from Testbench but it has to connect to the mock database
     }
 }
