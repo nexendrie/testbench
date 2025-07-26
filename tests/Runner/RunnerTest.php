@@ -12,7 +12,7 @@ require __DIR__ . '/../bootstrap.php';
 /**
  * @testCase
  */
-class Runner extends \Tester\TestCase
+class RunnerTest extends \Tester\TestCase
 {
     private string $tempDir;
 
@@ -155,4 +155,4 @@ class Runner extends \Tester\TestCase
     }
 }
 
-(new Runner())->run();
+(new RunnerTest())->run();

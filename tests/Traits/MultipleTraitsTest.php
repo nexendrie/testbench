@@ -9,7 +9,7 @@ require getenv('BOOTSTRAP');
 /**
  * @testCase
  */
-class MultipleTraits extends \Tester\TestCase
+class MultipleTraitsTest extends \Tester\TestCase
 {
     use \Testbench\TCompiledContainer;
     use \Testbench\TComponent;
@@ -23,4 +23,4 @@ class MultipleTraits extends \Tester\TestCase
     }
 }
 
-(new MultipleTraits())->run();
+(new MultipleTraitsTest())->run();

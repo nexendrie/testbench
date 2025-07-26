@@ -11,8 +11,10 @@ parameters:
     earlyTerminatingMethodCalls:
         Tester\Assert:
             - fail
+    universalObjectCratesClasses:
+        - Nette\Security\IIdentity
     ignoreErrors:
         -
             identifier: missingType.iterableValue
-        - '#Method Testbench\\CustomPresenterTestCase::getException\(\) should return Exception but returns Exception\|nul#'
         - '#Ternary operator condition is always true#'
+        - '#Call to an undefined method Nette\\ComponentModel\\IComponent::render\(\)#'

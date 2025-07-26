@@ -24,7 +24,7 @@ CONFIG;
  * @testCase
  * @see https://github.com/mrtnzlml/testbench/issues/20
  */
-final class Issue20 extends \Tester\TestCase
+final class Issue20Test extends \Tester\TestCase
 {
     use \Testbench\TPresenter;
 
@@ -34,4 +34,4 @@ final class Issue20 extends \Tester\TestCase
     }
 }
 
-(new Issue20())->run();
+(new Issue20Test())->run();

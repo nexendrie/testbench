@@ -11,7 +11,7 @@ require __DIR__ . '/../bootstrap.php';
 /**
  * @testCase
  */
-class Bootstrap extends \Tester\TestCase
+class BootstrapTest extends \Tester\TestCase
 {
     public function testSuperglobals(): void
     {
@@ -40,4 +40,4 @@ class Bootstrap extends \Tester\TestCase
     }
 }
 
-(new Bootstrap())->run();
+(new BootstrapTest())->run();

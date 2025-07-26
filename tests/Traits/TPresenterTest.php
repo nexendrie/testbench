@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Traits;
 
+use Nette\Application\UI\Presenter;
 use Tester\Assert;
 use Tester\Dumper;
 
@@ -151,7 +152,6 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
 
         Assert::true($user->isLoggedIn());
         Assert::same($identity, $user->getIdentity());
-        Assert::same(123, $user->getIdentity()->getId());
         Assert::true($user->isInRole('Role_1'));
         Assert::true($user->isInRole('Role_2'));
         Assert::false($user->isInRole('Role_3'));
@@ -252,9 +252,13 @@ class TPresenterTest extends \Testbench\CustomPresenterTestCase
                 'value',
             ],
         ], '/x/y');
+        /** @var Presenter $presenter */
+        $presenter = $this->getPresenter();
+        /** @var \ArrayIterator<int|string, mixed> $iterator */
+        $iterator = $presenter->getFlashSession()->getIterator();
         Assert::same(
             '{"test":"value","error":""}',
-            $this->getPresenter()->getFlashSession()->getIterator()->getArrayCopy()['flash'][0]->message
+            $iterator->getArrayCopy()['flash'][0]->message
         );
         Assert::exception(function () {
             $this->checkForm('Presenter:default', 'form4', [

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Issues;
 
+use Nette\Application\UI\Form;
+use Nette\Application\UI\Presenter;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
@@ -12,7 +14,7 @@ require __DIR__ . '/../bootstrap.php';
  * @testCase
  * @see https://github.com/mrtnzlml/testbench/issues/17
  */
-class Issue17 extends \Tester\TestCase
+class Issue17Test extends \Tester\TestCase
 {
     use \Testbench\TPresenter;
 
@@ -28,7 +30,11 @@ class Issue17 extends \Tester\TestCase
         } else {
             $this->check('Presenter:default', $params, $post);
         }
-        $errors = $this->getPresenter()->getComponent('form1')->getErrors();
+        /** @var Presenter $presenter */
+        $presenter = $this->getPresenter();
+        /** @var Form $component */
+        $component = $presenter->getComponent('form1');
+        $errors = $component->getErrors();
         if ($shouldFail) {
             Assert::same(['This field is required.'], $errors);
         } else {
@@ -45,11 +51,19 @@ class Issue17 extends \Tester\TestCase
             Assert::exception(function () use ($post) {
                 $this->checkForm('Presenter:default', 'form1', $post, false);
             }, 'Tester\AssertException', "field 'test' returned this error(s):\n  - This field is required.");
-            $errors = $this->getPresenter()->getComponent('form1')->getErrors();
+            /** @var Presenter $presenter */
+            $presenter = $this->getPresenter();
+            /** @var Form $component */
+            $component = $presenter->getComponent('form1');
+            $errors = $component->getErrors();
             Assert::same(['This field is required.'], $errors);
         } else {
             $this->checkForm('Presenter:default', 'form1', $post, '/x/y');
-            $errors = $this->getPresenter()->getComponent('form1')->getErrors();
+            /** @var Presenter $presenter */
+            $presenter = $this->getPresenter();
+            /** @var Form $component */
+            $component = $presenter->getComponent('form1');
+            $errors = $component->getErrors();
             Assert::same([], $errors);
         }
     }
@@ -71,4 +85,4 @@ class Issue17 extends \Tester\TestCase
     }
 }
 
-(new Issue17())->run();
+(new Issue17Test())->run();

@@ -14,7 +14,7 @@ require __DIR__ . '/../bootstrap.php';
  * @testCase
  * @see https://github.com/mrtnzlml/testbench/issues/21
  */
-class Issue21 extends \Tester\TestCase
+class Issue21Test extends \Tester\TestCase
 {
     use \Testbench\TPresenter;
     use \Testbench\TCompiledContainer;
@@ -60,4 +60,4 @@ class Issue21 extends \Tester\TestCase
     }
 }
 
-(new Issue21())->run();
+(new Issue21Test())->run();

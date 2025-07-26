@@ -378,10 +378,7 @@ trait TPresenter
         return $user->isLoggedIn();
     }
 
-    /**
-     * @return Presenter|null
-     */
-    protected function getPresenter()
+    protected function getPresenter(): ?Presenter
     {
         return $this->testbench_presenter;
     }
@@ -391,7 +388,7 @@ trait TPresenter
         return $this->testbench_httpCode;
     }
 
-    protected function getException(): Exception
+    protected function getException(): ?Exception
     {
         return $this->testbench_exception;
     }
